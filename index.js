@@ -85,7 +85,6 @@ AFRAME.registerComponent('menu', {
     this.loaded = 0;
     this.ready = false;
     var radius = 0.5;
-    var height = 1.2;
     var angle = Math.PI / 2;
     var self = this;
     this.colors = [
@@ -102,8 +101,8 @@ AFRAME.registerComponent('menu', {
         var x = radius * Math.cos(-2 * i * angle / sites.length);
         var z = radius * Math.sin(-2 * i * angle / sites.length);
 
-        bubble.setAttribute('position', { x: x, y: height, z: z });
-        bubble.setAttribute('look-at', { x: 0, y: height, z: 0 });
+        bubble.setAttribute('position', { x: x, y: 0, z: z });
+        bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
         bubble.setAttribute('data-url', sites[i].url);
 
         var text = self.makeText(sites[i].name);
