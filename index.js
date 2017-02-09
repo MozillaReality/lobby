@@ -30,6 +30,38 @@ AFRAME.registerComponent('rotate-y-axis', {
       x: rotation.x,
       y: rotation.y + 1,
       z: rotation.z,
+    });
+  }
+});
+
+AFRAME.registerComponent('bob-y', {
+  schema: {
+    offset: { type: 'int', default: 0 }
+  },
+
+  init: function () {
+    this.running = true;
+  },
+
+  play: function () {
+    this.running = true;
+  },
+
+  pause: function () {
+    this.running = false;
+  },
+
+  tick: function (time) {
+    if (!this.running) return false;
+    var el = this.el;
+    var position = el.getAttribute('position');
+
+    time += this.data.offset;
+
+    el.setAttribute('position', {
+      x: position.x,
+      y: position.y + Math.sin(time / 1000) * 0.0005,
+      z: position.z
     })
   }
 });
@@ -97,13 +129,29 @@ AFRAME.registerComponent('menu', {
 
     this.ready = new Promise(function(resolve, reject) {
       for (var i = 0; i < sites.length; i++) {
-        var bubble = self.makeBubble(self.colors[i]);
+        var bubble = self.makeBubble(i, self.colors[i]);
         var x = radius * Math.cos(-2 * i * angle / sites.length);
         var z = radius * Math.sin(-2 * i * angle / sites.length);
 
         bubble.setAttribute('position', { x: x, y: 0, z: z });
         bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
         bubble.setAttribute('data-url', sites[i].url);
+
+        var platform = document.createElement('a-entity');
+        platform.setAttribute('geometry', {
+          primitive: 'cylinder',
+          radius: 0.08,
+          height: 0.01
+        });
+        platform.setAttribute('position', {
+          x: x,
+          y: -0.2,
+          z: z
+        });
+        platform.setAttribute('material', {
+          color: 0x8F9193
+        });
+        self.el.appendChild(platform);
 
         var text = self.makeText(sites[i].name);
         text.setAttribute('position', { x: 0, y: 0.15, z: 0 });
@@ -150,7 +198,7 @@ AFRAME.registerComponent('menu', {
     return entity;
   },
 
-  makeBubble: function (color) {
+  makeBubble: function (index, color) {
     var bubble = document.createElement('a-entity');
     bubble.className = 'bubble';
     bubble.setAttribute('geometry', {
@@ -161,20 +209,9 @@ AFRAME.registerComponent('menu', {
       color: "lightblue",
       opacity: 0.2
     });
-
-    var platform = document.createElement('a-entity');
-    platform.setAttribute('geometry', {
-      primitive: 'cylinder',
-      radius: 0.1,
-      height: 0.01
+    bubble.setAttribute('bob-y', {
+      offset: (index + 1) * 500
     });
-    platform.setAttribute('position', {
-      y: -0.12
-    });
-    platform.setAttribute('material', {
-      color: 0x8F9193
-    });
-    bubble.appendChild(platform);
 
     var shape = document.createElement('a-entity');
     shape.setAttribute('geometry', {
