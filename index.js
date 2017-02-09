@@ -168,6 +168,20 @@ AFRAME.registerComponent('menu', {
           self.navigate(e.detail.target.dataset.url);
         });
 
+        bubble.addEventListener('mouseenter', function(e) {
+          var el = e.detail.target;
+          el.setAttribute('material', {
+            color: 0x5B91FF
+          });
+        });
+
+        bubble.addEventListener('mouseleave', function(e) {
+          var el = e.detail.target;
+          el.setAttribute('material', {
+            color: 'lightblue'
+          });
+        });
+
         // self.bubbles.push(bubble);
         self.el.appendChild(bubble);
       }
