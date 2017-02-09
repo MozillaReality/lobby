@@ -1,0 +1,24 @@
+{
+  "name": "webvr-lobby",
+  "version": "1.0.0",
+  "description": "WebVR Lobby",
+  "main": "index.js",
+  "scripts": {
+    "dev": "budo index.js:build.js --port 8000 --live --open",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run dev"
+  },
+  "author": "Casey Yee",
+  "license": "ISC",
+  "devDependencies": {
+    "aframe": "^0.4.1",
+    "budo": "^9.4.5"
+  },
+  "dependencies": {
+    "aframe": "git://github.com/aframevr/aframe.git#master",
+    "aframe-dev-components": "git://github.com/caseyyee/aframe-dev-components.git",
+    "aframe-look-at-component": "^0.2.0",
+    "aframe-physics-system": "^1.2.0",
+    "tween.js": "^16.6.0"
+  }
+}
