@@ -66,54 +66,8 @@ AFRAME.registerComponent('bob-y', {
   }
 });
 
-// AFRAME.registerComponent('environment', {
-//   init: function () {
-//     var radius = 5;
-//     var count = 100;
-
-
-//     function getRandom(min, max) {
-//       return Math.random() * (max - min) + min;
-//     }
-
-//     for (var i = 0; i < count; i++) {
-
-//       var x = radius * Math.cos(2 * i * Math.PI / count) + getRandom(0.1, 3);
-//       var z = radius * Math.sin(2 * i * Math.PI / count) + getRandom(0.1, 3);
-//       var height = getRandom(1, 3);
-
-//       var cone = document.createElement('a-entity');
-//       cone.setAttribute('geometry', {
-//         primitive: 'cone',
-//         radiusTop: 0,
-//         radiusBottom: 0.2,
-//         height: height
-//       });
-
-//       cone.setAttribute('position', {
-//         x: x,
-//         y: height / 2,
-//         z: z
-//       });
-
-//       cone.setAttribute('material', {
-//         color: "orange"
-//       });
-
-//       this.el.appendChild(cone);
-//     }
-//   },
-//   play: function () {
-//   },
-//   pause: function () {
-//   },
-//   tick: function () {
-//   }
-// });
-
 AFRAME.registerComponent('menu', {
   init: function () {
-    // this.bubbles = [];
     this.loaded = 0;
     this.ready = false;
     var radius = 0.5;
@@ -126,6 +80,10 @@ AFRAME.registerComponent('menu', {
       0xD5E86E,
       0x24DFBF
     ]
+    this.bubbles = [];
+
+    var controllers = document.querySelectorAll('a-entity[hand-controls]');
+    this.controllers = Array.prototype.slice.call(controllers);
 
     this.ready = new Promise(function(resolve, reject) {
       for (var i = 0; i < sites.length; i++) {
@@ -182,7 +140,7 @@ AFRAME.registerComponent('menu', {
           });
         });
 
-        // self.bubbles.push(bubble);
+        self.bubbles.push(bubble);
         self.el.appendChild(bubble);
       }
     });
@@ -242,6 +200,18 @@ AFRAME.registerComponent('menu', {
   },
 
   tick: function (time) {
-    TWEEN.update(time);
+    var self = this;
+    this.controllers.forEach(function(controller) {
+      var controllerBB = new THREE.Box3().setFromObject(controller.object3D);
+
+      self.bubbles.forEach(function(bubble) {
+        var meshBB = new THREE.Box3().setFromObject(bubble.getObject3D('mesh'));
+        var collision = meshBB.intersectsBox(controllerBB);
+
+        if (collision) {
+          console.log('collision');
+        }
+      })
+    });
   }
 });
