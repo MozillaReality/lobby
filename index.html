@@ -4,13 +4,15 @@
   <script type="text/javascript" src="build.js"></script>
 </head>
 <body>
-  <a-scene physics="gravity: -9.8">
-      <a-sky color="#333"></a-sky>
+  <a-scene retain-camera>
+      <a-sky color="#304175"></a-sky>
+
+      <a-entity transition></a-entity>
 
       <a-entity menu position="0 1.5 -0.5"></a-entity>
 
       <!-- ground -->
-      <a-cylinder rotation="0 0 0" radius="5" height="0.1" color="#333333"></a-plane>
+      <a-cylinder rotation="0 0 0" radius="5" height="0.1" color="#2A3434"></a-plane>
 
       <!-- controls -->
       <a-entity hand-controls="left"></a-entity>

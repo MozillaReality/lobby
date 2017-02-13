@@ -3,7 +3,8 @@ var TWEEN = require('tween.js');
 require('aframe-dev-components');
 require('aframe-look-at-component');
 
-require('./motion')
+require('./motion');
+require('./transition');
 
 var sites = require('./sites');
 
@@ -94,8 +95,13 @@ AFRAME.registerComponent('menu', {
   },
 
   navigate: function(url) {
+    var transition = document.querySelector('a-entity[transition]').components.transition;
+
     console.log('Navigating to ', url);
-    window.location.href = url;
+
+    transition.in().then(function() {
+      window.location.href = url;
+    });
   },
 
   play: function () {
@@ -156,7 +162,7 @@ AFRAME.registerComponent('menu', {
         var collision = meshBB.intersectsBox(controllerBB);
 
         if (collision) {
-          console.log('collision');
+          //console.log('collision');
         }
       })
     });
