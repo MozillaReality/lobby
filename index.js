@@ -35,31 +35,32 @@ AFRAME.registerComponent('menu', {
 
     this.ready = new Promise(function(resolve, reject) {
       for (var i = 0; i < sites.length; i++) {
-        var bubble = self.makeBubble(i, self.colors[i]);
+        var bubble = document.createElement('a-entity');
+        bubble.setAttribute('mixin', 'bubble');
+
         var x = radius * Math.cos(-2 * i * angle / sites.length);
         var z = radius * Math.sin(-2 * i * angle / sites.length);
 
         bubble.setAttribute('position', { x: x, y: 0, z: z });
         bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
         bubble.setAttribute('data-url', sites[i].url);
+        bubble.setAttribute('bob-y', { offset: 400 * i });
+
+        var jewel = document.createElement('a-entity');
+        jewel.setAttribute('mixin', 'jewel');
+        bubble.appendChild(jewel);
 
         var platform = document.createElement('a-entity');
-        platform.setAttribute('geometry', {
-          primitive: 'cylinder',
-          radius: 0.08,
-          height: 0.01
-        });
-        platform.setAttribute('position', {
-          x: x,
-          y: -0.2,
-          z: z
-        });
-        platform.setAttribute('material', {
-          color: 0x8F9193
-        });
+        platform.setAttribute('mixin', 'platform');
+        platform.setAttribute('position', { x: x, y: -0.16, z: z });
+
         self.el.appendChild(platform);
 
-        var text = self.makeText(sites[i].name);
+        var text = document.createElement('a-entity');
+        text.setAttribute('text', {
+          value: sites[i].name,
+          align: 'center'
+        });
         text.setAttribute('position', { x: 0, y: 0.15, z: 0 });
         bubble.appendChild(text);
 
@@ -76,16 +77,15 @@ AFRAME.registerComponent('menu', {
 
         bubble.addEventListener('mouseenter', function(e) {
           var el = e.detail.target;
-          el.setAttribute('material', {
-            color: 0x5B91FF
-          });
+          console.log(el.getAttribute('mixin'));
+          // el.setAttribute('mixin', );
         });
 
         bubble.addEventListener('mouseleave', function(e) {
           var el = e.detail.target;
-          el.setAttribute('material', {
-            color: 'lightblue'
-          });
+          // el.setAttribute('material', {
+          //   color: 'lightblue'
+          // });
         });
 
         self.bubbles.push(bubble);
@@ -99,7 +99,7 @@ AFRAME.registerComponent('menu', {
 
     console.log('Navigating to ', url);
 
-    transition.in().then(function() {
+    transition.out().then(function() {
       window.location.href = url;
     });
   },
@@ -112,47 +112,27 @@ AFRAME.registerComponent('menu', {
   },
 
   showMenu: function() {
-  },
+    var el = this.el;
 
-  makeText: function(text) {
-    var entity = document.createElement('a-entity');
-    entity.setAttribute('text', {
-      value: text,
-      align: 'center'
+    this.bubbles.forEach(function (bubble, i) {
+      var position = bubble.getAttribute('position');
+      var startY = position.y + 0.25;
+      bubble.setAttribute('position', { y: startY })
+      var tween = new TWEEN.Tween({ y: startY })
+        .to({ y: position.y }, 1000)
+        .delay(150 * i)
+        .easing(TWEEN.Easing.Cubic.Out)
+        .onUpdate(function () {
+          bubble.setAttribute('position', {
+            y: this.y
+          });
+        })
+        .start();
     });
-    return entity;
-  },
-
-  makeBubble: function (index, color) {
-    var bubble = document.createElement('a-entity');
-    bubble.className = 'bubble';
-    bubble.setAttribute('geometry', {
-      primitive: 'sphere',
-      radius: 0.1
-    });
-    bubble.setAttribute('material', {
-      color: "lightblue",
-      opacity: 0.2
-    });
-    bubble.setAttribute('bob-y', {
-      offset: (index + 1) * 500
-    });
-
-    var shape = document.createElement('a-entity');
-    shape.setAttribute('geometry', {
-      primitive: 'octahedron',
-      radius: 0.05
-    });
-    shape.setAttribute('material', {
-      color: color
-    })
-    shape.setAttribute('rotate-y-axis', '');
-    bubble.appendChild(shape);
-
-    return bubble;
   },
 
   tick: function (time) {
+    TWEEN.update(time);
     var self = this;
     this.controllers.forEach(function(controller) {
       var controllerBB = new THREE.Box3().setFromObject(controller.object3D);

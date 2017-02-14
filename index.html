@@ -4,27 +4,33 @@
   <script type="text/javascript" src="build.js"></script>
 </head>
 <body>
-  <a-scene retain-camera>
-      <a-sky color="#304175"></a-sky>
+  <a-scene retain-camera debug>
+    <a-assets>
+      <a-mixin id="bubble" geometry="primitive: sphere; radius: 0.1" material="color: lightblue; opacity: 0.2"></a-mixin>
+      <a-mixin id="jewel" rotate-y-axis geometry="primitive: octahedron; radius: 0.05"></a-mixin>
+      <a-mixin id="platform" geometry="primitive: cylinder; radius: 0.08; height: 0.01;" material="color: #8F9193"></a-mixin>
+      <a-mixin id="selected" material="color: red"></a-mixin>
+    </a-assets>
+    <a-sky color="#304175"></a-sky>
 
-      <a-entity transition></a-entity>
+    <a-entity transition></a-entity>
 
-      <a-entity menu position="0 1.5 -0.5"></a-entity>
+    <a-entity menu position="0 1.5 -0.5"></a-entity>
 
-      <!-- ground -->
-      <a-cylinder rotation="0 0 0" radius="5" height="0.1" color="#2A3434"></a-plane>
+    <!-- ground -->
+    <a-cylinder rotation="0 0 0" radius="5" height="0.1" color="#2A3434"></a-plane>
 
-      <!-- controls -->
-      <a-entity hand-controls="left"></a-entity>
-      <a-entity hand-controls="right"></a-entity>
+    <!-- controls -->
+    <a-entity hand-controls="left"></a-entity>
+    <a-entity hand-controls="right"></a-entity>
 
-      <a-entity daydream-controller geometry="primitive: sphere; radius: 0.1" material="color: red"></a-entity>
+    <a-entity daydream-controller geometry="primitive: sphere; radius: 0.1" material="color: red"></a-entity>
 
-      <a-entity position="0 0 0">
-        <a-camera>
-          <a-cursor></a-cursor>
-        </a-camera>
-      </a-entity>
-    </a-scene>
+    <a-entity position="0 0 0">
+      <a-camera>
+        <a-cursor></a-cursor>
+      </a-camera>
+    </a-entity>
+  </a-scene>
 </body>
 </html>

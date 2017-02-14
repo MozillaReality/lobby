@@ -1,5 +1,3 @@
-// var TWEEN = require('tween.js');
-
 AFRAME.registerComponent('transition', {
   init: function () {
     var self = this;
@@ -21,12 +19,9 @@ AFRAME.registerComponent('transition', {
 
     this.el.appendChild(entity);
 
-    this.in = function() {
+    this.out = function() {
       return new Promise(function (resolve, reject) {
-        var material = {
-          opacity: 0
-        };
-        var tween = new TWEEN.Tween(material)
+        var tween = new TWEEN.Tween({ opacity: 0 })
           .to({ opacity: 1 }, 1000)
           .onUpdate(function () {
             self.transitionEl.setAttribute('material', {
@@ -40,7 +35,7 @@ AFRAME.registerComponent('transition', {
       });
     }
 
-    this.out = new Promise(function (resolve, reject) {
+    this.in = new Promise(function (resolve, reject) {
       resolve();
     });
 
