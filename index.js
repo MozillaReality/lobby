@@ -16,6 +16,8 @@ var sites = require('./sites');
 
 AFRAME.registerComponent('menu', {
   init: function () {
+    this.bubbleMixin = 'bubble';
+    this.bubbleHover = 'hovered';
     this.loaded = 0;
     this.ready = false;
     var radius = 0.5;
@@ -36,7 +38,7 @@ AFRAME.registerComponent('menu', {
     this.ready = new Promise(function(resolve, reject) {
       for (var i = 0; i < sites.length; i++) {
         var bubble = document.createElement('a-entity');
-        bubble.setAttribute('mixin', 'bubble');
+        bubble.setAttribute('mixin', self.bubbleMixin);
 
         var x = radius * Math.cos(-2 * i * angle / sites.length);
         var z = radius * Math.sin(-2 * i * angle / sites.length);
@@ -77,15 +79,12 @@ AFRAME.registerComponent('menu', {
 
         bubble.addEventListener('mouseenter', function(e) {
           var el = e.detail.target;
-          console.log(el.getAttribute('mixin'));
-          // el.setAttribute('mixin', );
+          el.setAttribute('mixin', self.bubbleMixin + ' ' + self.bubbleHover);
         });
 
         bubble.addEventListener('mouseleave', function(e) {
           var el = e.detail.target;
-          // el.setAttribute('material', {
-          //   color: 'lightblue'
-          // });
+          el.setAttribute('mixin', self.bubbleMixin);
         });
 
         self.bubbles.push(bubble);
