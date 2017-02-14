@@ -4,15 +4,24 @@
   "description": "WebVR Lobby",
   "main": "index.js",
   "scripts": {
+    "start": "npm run dev",
     "dev": "budo index.js:build.js --port 8000 --live --open",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run dev"
+    "prebuild": "shx rm -rf _prod",
+    "build": "shx mkdir -p _prod && shx cp -R {index.html,*.js,*.md} _prod",
+    "predeploy": "npm run build",
+    "deploy": "ghpages -p _prod",
+    "deploy:cvan": "GHPAGES_REPO=\"cvan/webvr-lobby\" npm run deploy",
+    "deploy:caseyyee": "GHPAGES_REPO=\"caseyyee/webvr-lobby\" npm run deploy",
+    "deploy:casey": "npm run deploy:caseyyee",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Casey Yee",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "aframe": "^0.4.1",
-    "budo": "^9.4.5"
+    "budo": "^9.4.5",
+    "ghpages": "^0.0.10",
+    "shx": "^0.2.2"
   },
   "dependencies": {
     "aframe": "git://github.com/aframevr/aframe.git#master",
