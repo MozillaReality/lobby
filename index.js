@@ -50,6 +50,7 @@ AFRAME.registerComponent('menu', {
 
         var jewel = document.createElement('a-entity');
         jewel.setAttribute('mixin', 'jewel');
+        jewel.setAttribute('material', { color: self.colors[i]});
         bubble.appendChild(jewel);
 
         var platform = document.createElement('a-entity');
