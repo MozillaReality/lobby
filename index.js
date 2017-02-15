@@ -122,27 +122,27 @@ AFRAME.registerComponent('menu', {
     var self = this;
     var el = this.el;
 
-    // this.bubbles.forEach(function (bubble, i) {
-    //   var position = bubble.getAttribute('position');
-    //   var startY = position.y + 0.25;
-    //   bubble.setAttribute('position', { y: startY });
-    //   bubble.setAttribute('scale', { x: 0, y: 0, z: 0 });
-    //   var tween = new TWEEN.Tween({ y: startY, scale: 0 })
-    //     .to({ y: position.y, scale: 1 }, 1000)
-    //     .delay(150 * i)
-    //     .easing(TWEEN.Easing.Back.InOut)
-    //     .onUpdate(function () {
-    //       bubble.setAttribute('position', {
-    //         y: this.y
-    //       });
-    //       bubble.setAttribute('scale', {
-    //         x: this.scale,
-    //         y: this.scale,
-    //         z: this.scale
-    //       });
-    //     })
-    //     .start();
-    // });
+    this.bubbles.forEach(function (bubble, i) {
+      var position = bubble.getAttribute('position');
+      var startY = position.y + 0.25;
+      bubble.setAttribute('position', { y: startY });
+      bubble.setAttribute('scale', { x: 0, y: 0, z: 0 });
+      var tween = new TWEEN.Tween({ y: startY, scale: 0 })
+        .to({ y: position.y, scale: 1 }, 1000)
+        .delay(150 * i)
+        .easing(TWEEN.Easing.Back.InOut)
+        .onUpdate(function () {
+          bubble.setAttribute('position', {
+            y: this.y
+          });
+          bubble.setAttribute('scale', {
+            x: this.scale,
+            y: this.scale,
+            z: this.scale
+          });
+        })
+        .start();
+    });
   },
 
   tick: function (time) {
