@@ -1,7 +1,75 @@
 {
     "accessors": {
-        "accessor_buffer_Mesh_0": {
-            "bufferView": "bufferView_buffer_Mesh_0",
+        "accessor_buffer_Grid_0": {
+            "bufferView": "bufferView_buffer_Grid_0",
+            "byteOffset": 0,
+            "byteStride": 36,
+            "componentType": 5126,
+            "count": 85,
+            "max": [
+                1.6557414531707764,
+                1.0,
+                0.13831627368927002
+            ],
+            "min": [
+                -0.6244149208068848,
+                -0.47547420859336853,
+                0.0
+            ],
+            "type": "VEC3"
+        },
+        "accessor_buffer_Grid_1": {
+            "bufferView": "bufferView_buffer_Grid_0",
+            "byteOffset": 12,
+            "byteStride": 36,
+            "componentType": 5126,
+            "count": 85,
+            "max": [
+                0.3565332591533661,
+                0.5284250378608704,
+                0.9971191883087158
+            ],
+            "min": [
+                -0.7042704224586487,
+                -0.3633291721343994,
+                0.7099317312240601
+            ],
+            "type": "VEC3"
+        },
+        "accessor_buffer_Grid_2": {
+            "bufferView": "bufferView_buffer_Grid_0",
+            "byteOffset": 24,
+            "byteStride": 36,
+            "componentType": 5126,
+            "count": 85,
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": "VEC3"
+        },
+        "accessor_buffer_Grid_3": {
+            "bufferView": "bufferView_buffer_Grid_1",
+            "byteOffset": 0,
+            "byteStride": 2,
+            "componentType": 5123,
+            "count": 111,
+            "max": [
+                84
+            ],
+            "min": [
+                0
+            ],
+            "type": "SCALAR"
+        },
+        "accessor_buffer_Mesh.001_0": {
+            "bufferView": "bufferView_buffer_Mesh.001_0",
             "byteOffset": 0,
             "byteStride": 24,
             "componentType": 5126,
@@ -18,8 +86,8 @@
             ],
             "type": "VEC3"
         },
-        "accessor_buffer_Mesh_1": {
-            "bufferView": "bufferView_buffer_Mesh_0",
+        "accessor_buffer_Mesh.001_1": {
+            "bufferView": "bufferView_buffer_Mesh.001_0",
             "byteOffset": 12,
             "byteStride": 24,
             "componentType": 5126,
@@ -36,8 +104,8 @@
             ],
             "type": "VEC3"
         },
-        "accessor_buffer_Mesh_2": {
-            "bufferView": "bufferView_buffer_Mesh_1",
+        "accessor_buffer_Mesh.001_2": {
+            "bufferView": "bufferView_buffer_Mesh.001_1",
             "byteOffset": 0,
             "byteStride": 2,
             "componentType": 5123,
@@ -59,24 +127,36 @@
         "version": "1.0"
     },
     "bufferViews": {
-        "bufferView_buffer_Mesh_0": {
-            "buffer": "buffer_Mesh",
-            "byteLength": 23040,
+        "bufferView_buffer_Grid_0": {
+            "buffer": "buffer_combined",
+            "byteLength": 3060,
             "byteOffset": 0,
             "target": 34962
         },
-        "bufferView_buffer_Mesh_1": {
-            "buffer": "buffer_Mesh",
+        "bufferView_buffer_Grid_1": {
+            "buffer": "buffer_combined",
+            "byteLength": 222,
+            "byteOffset": 3060,
+            "target": 34963
+        },
+        "bufferView_buffer_Mesh.001_0": {
+            "buffer": "buffer_combined",
+            "byteLength": 23040,
+            "byteOffset": 3282,
+            "target": 34962
+        },
+        "bufferView_buffer_Mesh.001_1": {
+            "buffer": "buffer_combined",
             "byteLength": 2880,
-            "byteOffset": 23040,
+            "byteOffset": 26322,
             "target": 34963
         }
     },
     "buffers": {
-        "buffer_Mesh": {
-            "byteLength": 25920,
+        "buffer_combined": {
+            "byteLength": 29202,
             "type": "arraybuffer",
-            "uri": "buffer_Mesh.bin"
+            "uri": "buffer_combined.bin"
         }
     },
     "cameras": {
@@ -190,18 +270,71 @@
                 }
             },
             "name": "Material.001"
+        },
+        "material_Material.002": {
+            "extensions": {
+                "KHR_materials_common": {
+                    "technique": "PHONG",
+                    "values": {
+                        "ambient": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "diffuse": [
+                            0.2231154441833496,
+                            0.20980052649974823,
+                            0.3928166627883911,
+                            1.0
+                        ],
+                        "doubleSided": false,
+                        "emission": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shininess": 50,
+                        "specular": [
+                            0.24551041424274445,
+                            0.1411058008670807,
+                            0.2185395359992981,
+                            1.0
+                        ],
+                        "transparency": 1.0,
+                        "transparent": false
+                    }
+                }
+            },
+            "name": "Material.002"
         }
     },
     "meshes": {
-        "mesh_Mesh": {
-            "name": "Mesh",
+        "mesh_Grid": {
+            "name": "Grid",
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": "accessor_buffer_Mesh_1",
-                        "POSITION": "accessor_buffer_Mesh_0"
+                        "COLOR_0": "accessor_buffer_Grid_2",
+                        "NORMAL": "accessor_buffer_Grid_1",
+                        "POSITION": "accessor_buffer_Grid_0"
                     },
-                    "indices": "accessor_buffer_Mesh_2",
+                    "indices": "accessor_buffer_Grid_3",
+                    "material": "material_Material.002",
+                    "mode": 4
+                }
+            ]
+        },
+        "mesh_Mesh.001": {
+            "name": "Mesh.001",
+            "primitives": [
+                {
+                    "attributes": {
+                        "NORMAL": "accessor_buffer_Mesh.001_1",
+                        "POSITION": "accessor_buffer_Mesh.001_0"
+                    },
+                    "indices": "accessor_buffer_Mesh.001_2",
                     "material": "material_Material.001",
                     "mode": 4
                 }
@@ -213,24 +346,49 @@
             "camera": "camera_Camera",
             "children": [],
             "matrix": [
-                0.6859206557273865,
-                0.7276763319969177,
+                1.5021146535873413,
+                1.5935564041137695,
                 0.0,
                 0.0,
-                -0.32401347160339355,
-                0.305420845746994,
-                0.8953956365585327,
+                -0.7095651030540466,
+                0.6688486337661743,
+                1.9608490467071533,
                 0.0,
-                0.6515582203865051,
-                -0.6141703724861145,
-                0.44527140259742737,
+                1.426863431930542,
+                -1.344986915588379,
+                0.9751108288764954,
                 0.0,
-                7.481131553649902,
-                -6.5076398849487305,
-                5.34366512298584,
+                11.884527206420898,
+                -10.379440307617188,
+                8.522945404052734,
                 1.0
             ],
             "name": "Camera"
+        },
+        "node_Grid": {
+            "children": [],
+            "matrix": [
+                77.15811920166016,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                77.15811920166016,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                77.15811920166016,
+                0.0,
+                -4.323395252227783,
+                53.5167236328125,
+                0.0,
+                1.0
+            ],
+            "meshes": [
+                "mesh_Grid"
+            ],
+            "name": "Grid"
         },
         "node_Icosphere": {
             "children": [],
@@ -253,7 +411,7 @@
                 1.0
             ],
             "meshes": [
-                "mesh_Mesh"
+                "mesh_Mesh.001"
             ],
             "name": "Icosphere"
         }
@@ -275,6 +433,7 @@
             },
             "name": "Scene",
             "nodes": [
+                "node_Grid",
                 "node_Icosphere",
                 "node_Camera"
             ]
