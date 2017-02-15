@@ -2,6 +2,7 @@ var AFRAME = require('aframe');
 var TWEEN = require('tween.js');
 require('aframe-dev-components');
 require('aframe-look-at-component');
+require('aframe-gradient-sky');
 
 require('./motion');
 require('./transition');
@@ -16,26 +17,27 @@ var sites = require('./sites');
 
 AFRAME.registerComponent('menu', {
   init: function () {
+    var self = this;
     this.bubbleMixin = 'bubble';
     this.bubbleHover = 'hovered';
-    this.loaded = 0;
-    this.ready = false;
-    var radius = 0.5;
-    var angle = Math.PI / 2;
-    var self = this;
     this.colors = [
       0x6C77E8,
       0xE8A238,
       0xF83C98,
       0xD5E86E,
       0x24DFBF
-    ]
+    ];
+
+    var radius = 0.5;         // radius of menu around user.
+    var angle = Math.PI / 2;  // angle of menu.
+
+    this.loaded = 0;
     this.bubbles = [];
 
     var controllers = document.querySelectorAll('a-entity[hand-controls]');
     this.controllers = Array.prototype.slice.call(controllers);
 
-    this.ready = new Promise(function(resolve, reject) {
+    this.ready = new Promise(function (resolve, reject) {
       for (var i = 0; i < sites.length; i++) {
         var bubble = document.createElement('a-entity');
         bubble.setAttribute('mixin', self.bubbleMixin);
@@ -46,7 +48,9 @@ AFRAME.registerComponent('menu', {
         bubble.setAttribute('position', { x: x, y: 0, z: z });
         bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
         bubble.setAttribute('data-url', sites[i].url);
-        bubble.setAttribute('bob-y', { offset: 400 * i });
+        bubble.setAttribute('bob-y', {
+          offset: 400 * i
+        });
 
         var jewel = document.createElement('a-entity');
         jewel.setAttribute('mixin', 'jewel');
@@ -78,14 +82,14 @@ AFRAME.registerComponent('menu', {
           self.navigate(e.detail.target.dataset.url);
         });
 
-        bubble.addEventListener('mouseenter', function(e) {
+        bubble.addEventListener('mouseenter', function (e) {
           var el = e.detail.target;
-          el.setAttribute('mixin', self.bubbleMixin + ' ' + self.bubbleHover);
+          // el.setAttribute('mixin', self.bubbleMixin + ' ' + self.bubbleHover);
         });
 
-        bubble.addEventListener('mouseleave', function(e) {
+        bubble.addEventListener('mouseleave', function (e) {
           var el = e.detail.target;
-          el.setAttribute('mixin', self.bubbleMixin);
+          // el.setAttribute('mixin', self.bubbleMixin);
         });
 
         self.bubbles.push(bubble);
@@ -99,7 +103,7 @@ AFRAME.registerComponent('menu', {
 
     console.log('Navigating to ', url);
 
-    transition.out().then(function() {
+    transition.out().then(function () {
       window.location.href = url;
     });
   },
@@ -111,20 +115,26 @@ AFRAME.registerComponent('menu', {
   pause: function () {
   },
 
-  showMenu: function() {
+  showMenu: function () {
     var el = this.el;
 
     this.bubbles.forEach(function (bubble, i) {
       var position = bubble.getAttribute('position');
       var startY = position.y + 0.25;
-      bubble.setAttribute('position', { y: startY })
-      var tween = new TWEEN.Tween({ y: startY })
-        .to({ y: position.y }, 1000)
+      bubble.setAttribute('position', { y: startY });
+      bubble.setAttribute('scale', { x: 0, y: 0, z: 0 });
+      var tween = new TWEEN.Tween({ y: startY, scale: 0 })
+        .to({ y: position.y, scale: 1 }, 1000)
         .delay(150 * i)
-        .easing(TWEEN.Easing.Cubic.Out)
+        .easing(TWEEN.Easing.Back.InOut)
         .onUpdate(function () {
           bubble.setAttribute('position', {
             y: this.y
+          });
+          bubble.setAttribute('scale', {
+            x: this.scale,
+            y: this.scale,
+            z: this.scale
           });
         })
         .start();
@@ -134,10 +144,10 @@ AFRAME.registerComponent('menu', {
   tick: function (time) {
     TWEEN.update(time);
     var self = this;
-    this.controllers.forEach(function(controller) {
+    this.controllers.forEach(function (controller) {
       var controllerBB = new THREE.Box3().setFromObject(controller.object3D);
 
-      self.bubbles.forEach(function(bubble) {
+      self.bubbles.forEach(function (bubble) {
         var meshBB = new THREE.Box3().setFromObject(bubble.getObject3D('mesh'));
         var collision = meshBB.intersectsBox(controllerBB);
 

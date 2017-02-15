@@ -1,4 +1,3 @@
-
 AFRAME.registerComponent('rotate-y-axis', {
   init: function () {
     this.rotate = true;

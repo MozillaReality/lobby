@@ -1,0 +1,283 @@
+{
+    "accessors": {
+        "accessor_buffer_Mesh_0": {
+            "bufferView": "bufferView_buffer_Mesh_0",
+            "byteOffset": 0,
+            "byteStride": 24,
+            "componentType": 5126,
+            "count": 960,
+            "max": [
+                0.9602826833724976,
+                1.0097496509552002,
+                1.0099999904632568
+            ],
+            "min": [
+                -0.9603782296180725,
+                -1.0097496509552002,
+                -0.0022171696182340384
+            ],
+            "type": "VEC3"
+        },
+        "accessor_buffer_Mesh_1": {
+            "bufferView": "bufferView_buffer_Mesh_0",
+            "byteOffset": 12,
+            "byteStride": 24,
+            "componentType": 5126,
+            "count": 960,
+            "max": [
+                0.9863992929458618,
+                0.9913846254348755,
+                0.9758662581443787
+            ],
+            "min": [
+                -0.9773254990577698,
+                -0.9913846254348755,
+                -0.9806445837020874
+            ],
+            "type": "VEC3"
+        },
+        "accessor_buffer_Mesh_2": {
+            "bufferView": "bufferView_buffer_Mesh_1",
+            "byteOffset": 0,
+            "byteStride": 2,
+            "componentType": 5123,
+            "count": 1440,
+            "max": [
+                959
+            ],
+            "min": [
+                0
+            ],
+            "type": "SCALAR"
+        }
+    },
+    "asset": {
+        "profile": {
+            "api": "WebGL",
+            "version": "1.0.3"
+        },
+        "version": "1.0"
+    },
+    "bufferViews": {
+        "bufferView_buffer_Mesh_0": {
+            "buffer": "buffer_Mesh",
+            "byteLength": 23040,
+            "byteOffset": 0,
+            "target": 34962
+        },
+        "bufferView_buffer_Mesh_1": {
+            "buffer": "buffer_Mesh",
+            "byteLength": 2880,
+            "byteOffset": 23040,
+            "target": 34963
+        }
+    },
+    "buffers": {
+        "buffer_Mesh": {
+            "byteLength": 25920,
+            "type": "arraybuffer",
+            "uri": "buffer_Mesh.bin"
+        }
+    },
+    "cameras": {
+        "camera_Camera": {
+            "name": "Camera",
+            "perspective": {
+                "aspectRatio": 1.703595982340029,
+                "yfov": 0.5033799409866333,
+                "zfar": 100.0,
+                "znear": 0.10000000149011612
+            },
+            "type": "perspective"
+        }
+    },
+    "extensions": {
+        "KHR_materials_common": {
+            "lights": {
+                "light_Lamp": {
+                    "name": "Lamp",
+                    "point": {
+                        "color": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "constantAttenuation": 1,
+                        "linearAttenuation": 0,
+                        "quadraticAttenuation": 0.03333335240683057
+                    },
+                    "type": "point"
+                }
+            }
+        }
+    },
+    "extensionsUsed": [
+        "KHR_materials_common"
+    ],
+    "materials": {
+        "material_Material": {
+            "extensions": {
+                "KHR_materials_common": {
+                    "technique": "PHONG",
+                    "values": {
+                        "ambient": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "diffuse": [
+                            0.64000004529953,
+                            0.64000004529953,
+                            0.64000004529953,
+                            1.0
+                        ],
+                        "doubleSided": false,
+                        "emission": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shininess": 50,
+                        "specular": [
+                            0.5,
+                            0.5,
+                            0.5,
+                            1.0
+                        ],
+                        "transparency": 1.0,
+                        "transparent": false
+                    }
+                }
+            },
+            "name": "Material"
+        },
+        "material_Material.001": {
+            "extensions": {
+                "KHR_materials_common": {
+                    "technique": "LAMBERT",
+                    "values": {
+                        "ambient": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "diffuse": [
+                            0.2768016755580902,
+                            0.4326844811439514,
+                            0.44520100951194763,
+                            1.0
+                        ],
+                        "doubleSided": false,
+                        "emission": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "shininess": 50,
+                        "specular": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "transparency": 1.0,
+                        "transparent": false
+                    }
+                }
+            },
+            "name": "Material.001"
+        }
+    },
+    "meshes": {
+        "mesh_Mesh": {
+            "name": "Mesh",
+            "primitives": [
+                {
+                    "attributes": {
+                        "NORMAL": "accessor_buffer_Mesh_1",
+                        "POSITION": "accessor_buffer_Mesh_0"
+                    },
+                    "indices": "accessor_buffer_Mesh_2",
+                    "material": "material_Material.001",
+                    "mode": 4
+                }
+            ]
+        }
+    },
+    "nodes": {
+        "node_Camera": {
+            "camera": "camera_Camera",
+            "children": [],
+            "matrix": [
+                0.6859206557273865,
+                0.7276763319969177,
+                0.0,
+                0.0,
+                -0.32401347160339355,
+                0.305420845746994,
+                0.8953956365585327,
+                0.0,
+                0.6515582203865051,
+                -0.6141703724861145,
+                0.44527140259742737,
+                0.0,
+                7.481131553649902,
+                -6.5076398849487305,
+                5.34366512298584,
+                1.0
+            ],
+            "name": "Camera"
+        },
+        "node_Icosphere": {
+            "children": [],
+            "matrix": [
+                5.42633581161499,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                5.42633581161499,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                5.42633581161499,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "meshes": [
+                "mesh_Mesh"
+            ],
+            "name": "Icosphere"
+        }
+    },
+    "samplers": {
+        "sampler_default": {}
+    },
+    "scene": "scene_Scene",
+    "scenes": {
+        "scene_Scene": {
+            "extras": {
+                "active_camera": "camera_Camera",
+                "background_color": [
+                    0.05087608844041824,
+                    0.05087608844041824,
+                    0.05087608844041824
+                ],
+                "frames_per_second": 24
+            },
+            "name": "Scene",
+            "nodes": [
+                "node_Icosphere",
+                "node_Camera"
+            ]
+        }
+    }
+}
