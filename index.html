@@ -7,7 +7,7 @@
   <a-scene retain-camera fog="type: linear; color: #CDAAC9; far: 150; near: 0">
     <a-assets>
       <a-asset-item id="dome" src="dome.gltf">
-      <a-mixin id="bubble" geometry="primitive: sphere; radius: 0.1" material="color: lightblue; opacity: 0.4"></a-mixin>
+      <a-mixin id="bubble" geometry="primitive: sphere; radius: 0.1" material="color: lightblue; opacity: 0.2; metalness: 0.7; roughness: 0.5"></a-mixin>
       <a-mixin id="jewel" rotate-y-axis geometry="primitive: octahedron; radius: 0.05"></a-mixin>
       <a-mixin id="platform" geometry="primitive: cylinder; radius: 0.08; height: 0.01;" material="color: #669BA1"></a-mixin>
       <a-mixin id="hovered" material="color: darkblue"></a-mixin>
@@ -22,9 +22,11 @@
     <a-entity menu position="0 1.5 -0.5"></a-entity>
 
     <!-- ground -->
-    <a-entity geometry="primitive: circle; radius: 5.4; segments: 10" rotation="-90 18 0" material="color: #315A61"></a-entity>
+    <a-entity geometry="primitive: circle; radius: 5.4; segments: 10" rotation="-90 18 0" material="color: #315A61; metalness: 0.1d; roughness: 0.7"></a-entity>
 
-    <a-entity geometry="primitive: circle; radius: 500;" rotation="-90 0 0" position="0 -0.1 0" material="color: #5D5A7A"></a-entity>
+    <a-entity geometry="primitive: circle; radius: 500;" rotation="-90 0 0" position="0 -0.1 0" material="color: #5D5A7A; metalness: 0.1; roughness: 0.8"></a-entity>
+
+    <a-entity light="color:#ffa27a; groundColor:#ff6f28; intensity:0.9a;" position="4s0 11 -50" data-aframe-default-light="" aframe-injected=""></a-entity>
 
     <!-- controls -->
     <a-entity hand-controls="left"></a-entity>
