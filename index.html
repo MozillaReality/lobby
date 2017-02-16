@@ -1,45 +1,52 @@
-<html>
-<head>
-  <title>Lobby</title>
-  <script type="text/javascript" src="build.js"></script>
-</head>
-<body>
-  <a-scene retain-camera fog="type: linear; color: #CDAAC9; far: 150; near: 0">
-    <a-assets>
-      <a-asset-item id="dome" src="dome.gltf">
-      <a-mixin id="bubble" geometry="primitive: sphere; radius: 0.1" material="color: lightblue; opacity: 0.2; metalness: 0.7; roughness: 0.5"></a-mixin>
-      <a-mixin id="jewel" rotate-y-axis geometry="primitive: octahedron; radius: 0.05"></a-mixin>
-      <a-mixin id="platform" geometry="primitive: cylinder; radius: 0.08; height: 0.01;" material="color: #669BA1"></a-mixin>
-      <a-mixin id="hovered" material="color: darkblue"></a-mixin>
-    </a-assets>
-    <a-gradient-sky material="shader: gradient; topColor: 213, 157, 213; bottomColor: 109, 146, 188;"></a-gradient-sky>
+<!doctype html>
+  <html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0ff">
+    <title>Lobby</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://localhost:7007/webvr-agent.js"></script>
+    <script src="build.js"></script>
+  </head>
+  <body>
+    <a-scene retain-camera fog="type: linear; color: #CDAAC9; far: 150; near: 0">
+      <a-assets>
+        <a-asset-item id="dome" src="dome.gltf"></a-asset-item>
+        <a-mixin id="bubble" geometry="primitive: sphere; radius: 0.1" material="color: lightblue; opacity: 0.2; metalness: 0.7; roughness: 0.5"></a-mixin>
+        <a-mixin id="jewel" rotate-y-axis geometry="primitive: octahedron; radius: 0.05"></a-mixin>
+        <a-mixin id="platform" geometry="primitive: cylinder; radius: 0.08; height: 0.01;" material="color: #669BA1"></a-mixin>
+        <a-mixin id="hovered" material="color: darkblue"></a-mixin>
+      </a-assets>
+      <a-gradient-sky material="shader: gradient; topColor: 213, 157, 213; bottomColor: 109, 146, 188;"></a-gradient-sky>
 
-    <a-gltf-model src="#dome" rotation="-90 0 0"></a-gltf-model>
+      <a-gltf-model src="#dome" rotation="-90 0 0"></a-gltf-model>
 
-    <a-entity transition></a-entity>
+      <a-entity transition></a-entity>
 
-    <a-entity menu position="0 1.5 -0.5"></a-entity>
+      <a-entity menu position="0 1.5 -0.5"></a-entity>
 
-    <!-- platform -->
-    <a-entity geometry="primitive: circle; radius: 5.4; segments: 10" rotation="-90 18 0" material="color: #315A61; metalness: 0.1d; roughness: 0.7"></a-entity>
+      <!-- platform -->
+      <a-entity geometry="primitive: circle; radius: 5.4; segments: 10" rotation="-90 18 0" material="color: #315A61; metalness: 0.1d; roughness: 0.7"></a-entity>
 
-    <!-- ground -->
-    <a-entity geometry="primitive: circle; radius: 500;" rotation="-90 0 0" position="0 -0.1 0" material="color: #5D5A7A; metalness: 0.1; roughness: 0.8"></a-entity>
+      <!-- ground -->
+      <a-entity geometry="primitive: circle; radius: 500;" rotation="-90 0 0" position="0 -0.1 0" material="color: #5D5A7A; metalness: 0.1; roughness: 0.8"></a-entity>
 
-    <a-entity light="color:#ffa27a; groundColor:#ff6f28; intensity:0.9a;" position="4s0 11 -50" data-aframe-default-light="" aframe-injected=""></a-entity>
+      <a-entity light="color:#ffa27a; groundColor:#ff6f28; intensity:0.9a;" position="4s0 11 -50" data-aframe-default-light="" aframe-injected=""></a-entity>
 
-    <!-- controls -->
-    <a-entity hand-controls="left"></a-entity>
-    <a-entity hand-controls="right"></a-entity>
+      <!-- controls -->
+      <a-entity hand-controls="left"></a-entity>
+      <a-entity hand-controls="right"></a-entity>
 
-    <a-entity daydream-controller geometry="primitive: sphere; radius: 0.1" material="color: red"></a-entity>
-    <a-camera>
-      <a-entity cursor
-        raycaster="far: 20; interval: 1000; objects: .bubble"
-        position="0 0 -1"
-        geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
-        material="color: #9167A1; shader: flat">
-    </a-camera>
-  </a-scene>
-</body>
+      <a-entity daydream-controller geometry="primitive: sphere; radius: 0.1" material="color: red"></a-entity>
+      <a-camera>
+        <a-entity cursor
+          raycaster="far: 20; interval: 1000; objects: .bubble"
+          position="0 0 -1"
+          geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
+          material="color: #9167A1; shader: flat">
+      </a-camera>
+    </a-scene>
+  </body>
 </html>
