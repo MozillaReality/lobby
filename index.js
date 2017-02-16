@@ -6,6 +6,7 @@ require('aframe-gradient-sky');
 
 require('./motion');
 require('./transition');
+require('./clouds');
 
 var sites = require('./sites');
 
@@ -107,7 +108,7 @@ AFRAME.registerComponent('menu', {
     console.log('Navigating to ', url);
 
     transition.out().then(function () {
-      window.location.href = url;
+    //  window.location.href = url;
     });
   },
 

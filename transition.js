@@ -1,3 +1,5 @@
+var ExplodeModifier = require('./lib/ExplodeModifier');
+
 AFRAME.registerComponent('transition', {
   init: function () {
     var self = this;
@@ -5,15 +7,30 @@ AFRAME.registerComponent('transition', {
     var entity = document.createElement('a-entity');
     entity.setAttribute('geometry', {
       primitive: 'sphere',
-      radius: 100
+      radius: 1,
+      buffer: false
     });
 
     entity.setAttribute('position', { y: 1 })
     entity.setAttribute('material', {
-      color: "black",
-      side: "back",
-      opacity: 0
+      color: 'red',
+      side: 'front',
+      opacity: 1
     });
+
+    entity.addEventListener('loaded', function () {
+      var mesh = entity.getObject3D('mesh');
+      var geometry = mesh.geometry;
+      var explodeModifier = new ExplodeModifier();
+      explodeModifier.modify(geometry);
+
+      console.log(geometry.faces);
+      // for (var i = 0; i < geometry.vertices.length; i++) {
+      //   geometry.vertices[i].
+      // };
+
+      // explodeModifier(mesh)
+    })
 
     this.transitionEl = entity;
 
