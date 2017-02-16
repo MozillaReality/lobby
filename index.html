@@ -11,13 +11,14 @@
     <script src="build.js"></script>
   </head>
   <body>
-    <a-scene retain-camera fog="type: linear; color: #CDAAC9; far: 150; near: 0">
+    <a-scene retain-camera debug fog="type: linear; color: #CDAAC9; far: 150; near: 0">
       <a-assets>
         <a-asset-item id="dome" src="dome.gltf"></a-asset-item>
         <a-mixin id="bubble" geometry="primitive: sphere; radius: 0.1" material="color: lightblue; opacity: 0.2; metalness: 0.7; roughness: 0.5"></a-mixin>
         <a-mixin id="jewel" rotate-y-axis geometry="primitive: octahedron; radius: 0.05"></a-mixin>
         <a-mixin id="platform" geometry="primitive: cylinder; radius: 0.08; height: 0.01;" material="color: #669BA1"></a-mixin>
         <a-mixin id="hovered" material="color: darkblue"></a-mixin>
+        <a-mixin id="cloud" geometry="primitive: plane; width: 1, height: 1" material="color: #F5DCFF; opacity: 0.4; side: front" rotation="90 0 0"></a-mixin>
       </a-assets>
       <a-gradient-sky material="shader: gradient; topColor: 213, 157, 213; bottomColor: 109, 146, 188;"></a-gradient-sky>
 

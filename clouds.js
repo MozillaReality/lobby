@@ -18,25 +18,18 @@ AFRAME.registerComponent('clouds', {
 
     for (var i = 0; i < clouds; i++) {
       var entity = document.createElement('a-entity');
-
-      entity.setAttribute('geometry', {
-        primitive: 'plane',
-        width: randomInt(10, 50),
-        height: randomInt(50, 200)
-      });
-
-      entity.setAttribute('material', {
-        color: '#F5DCFF',
-        side: 'front',
-        opacity: 0.4
+      entity.setAttribute('mixin', 'cloud');
+      entity.setAttribute('scale', {
+        y: randomInt(50, 200),
+        x: randomInt(10, 50),
+        z: 1
       });
 
       var x = randomInt(1, spread) - (spread / 2);
       var y = randomInt(altitude, altitude + altitudeSpread);
       var z = randomInt(1, spread) - randomInt(1, spread);
 
-      entity.setAttribute('position', { x: x, y: y, z: z })
-      entity.setAttribute('rotation', { x: 90 })
+      entity.setAttribute('position', { x: x, y: y, z: z });
 
       this.clouds.push(entity);
       this.el.appendChild(entity);
