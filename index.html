@@ -11,27 +11,29 @@
     <script src="build.js"></script>
   </head>
   <body>
-    <a-scene retain-camera debug fog="type: linear; color: #CDAAC9; far: 150; near: 0">
+    <a-scene retain-camera fog="type: linear; color: #CDAAC9; far: 150; near: 0">
       <a-assets>
         <a-asset-item id="dome" src="dome.gltf"></a-asset-item>
         <a-mixin id="bubble" geometry="primitive: sphere; radius: 0.1" material="color: lightblue; opacity: 0.2; metalness: 0.7; roughness: 0.5"></a-mixin>
         <a-mixin id="jewel" rotate-y-axis geometry="primitive: octahedron; radius: 0.05"></a-mixin>
-        <a-mixin id="platform" geometry="primitive: cylinder; radius: 0.08; height: 0.01;" material="color: #669BA1"></a-mixin>
+        <a-mixin id="platform" geometry="primitive: cylinder; radius: 0.08; height: 0.01;" material="color: #182E29" position="0 -0.1 0"></a-mixin>
         <a-mixin id="hovered" material="color: darkblue"></a-mixin>
         <a-mixin id="cloud" geometry="primitive: plane; width: 1, height: 1" material="color: #F5DCFF; opacity: 0.4; side: front" rotation="90 0 0"></a-mixin>
       </a-assets>
       <a-gradient-sky material="shader: gradient; topColor: 213, 157, 213; bottomColor: 109, 146, 188;"></a-gradient-sky>
 
-      <a-gltf-model src="#dome" rotation="-90 0 0"></a-gltf-model>
-
-      <a-entity menu position="0 1.5 -0.5"></a-entity>
-
+      <!-- dome and surroundings model -->
       <a-entity clouds></a-entity>
+
+      <a-gltf-model src="#dome" rotation="-90 0 0"></a-gltf-model>
 
       <!-- platform -->
       <a-entity geometry="primitive: circle; radius: 5.4; segments: 10" rotation="-90 18 0" material="color: #2F625B; metalness: 0.1; roughness: 0.7"></a-entity>
 
       <a-entity geometry="primitive: circle; radius: 3" position="0 0.1 0" rotation="-90 18 0" material="color: #3A726A; metalness: 0.1; roughness: 0.7"></a-entity>
+
+      <!-- menu -->
+      <a-entity menu position="0 1.5 -0.5"></a-entity>
 
       <!-- ground -->
       <a-entity geometry="primitive: circle; radius: 500;" rotation="-90 0 0" position="0 -0.1 0" material="color: #49567A; metalness: 0.1; roughness: 0.8"></a-entity>
@@ -44,6 +46,7 @@
 
       <a-entity daydream-controller geometry="primitive: sphere; radius: 0.1" material="color: red"></a-entity>
       <a-camera>
+        <a-entity transition></a-entity>
         <a-entity cursor
           raycaster="far: 20; interval: 1000; objects: .bubble"
           position="0 0 -1"

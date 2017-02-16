@@ -13,9 +13,9 @@ AFRAME.registerComponent('transition', {
 
     entity.setAttribute('position', { y: 1 })
     entity.setAttribute('material', {
-      color: 'red',
+      color: 'black``',
       side: 'front',
-      opacity: 1
+      opacity: 0
     });
 
     entity.addEventListener('loaded', function () {
@@ -24,7 +24,6 @@ AFRAME.registerComponent('transition', {
       var explodeModifier = new ExplodeModifier();
       explodeModifier.modify(geometry);
 
-      console.log(geometry.faces);
       // for (var i = 0; i < geometry.vertices.length; i++) {
       //   geometry.vertices[i].
       // };
