@@ -7,7 +7,7 @@
     "start": "npm run dev",
     "dev": "budo index.js:build.js --port 8000 --live --open",
     "prebuild": "shx rm -rf _prod",
-    "build": "shx mkdir -p _prod && shx cp -R {index.html,*.js,*.md} _prod",
+    "build": "shx mkdir -p _prod && shx cp -R {index.html,*.js,*.md} _prod/.",
     "predeploy": "npm run build",
     "deploy": "ghpages -p _prod",
     "deploy:cvan": "GHPAGES_REPO=\"cvan/webvr-lobby\" npm run deploy",
