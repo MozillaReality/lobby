@@ -53,5 +53,23 @@
           material="color: #9167A1; shader: flat">
       </a-camera>
     </a-scene>
+    <script>
+      window.addEventListener('load', function () {
+        var scene = document.querySelector('a-scene');
+        if (scene) {
+          if (scene.hasLoaded) {
+            scene.enterVR();
+          } else {
+            scene.addEventListener('loaded', function () {
+              scene.enterVR();
+            });
+          }
+        }
+        try {
+          window.sessionStorage.vrWasPresenting = true;
+        } catch (e) {
+        }
+      });
+    </script>
   </body>
 </html>
