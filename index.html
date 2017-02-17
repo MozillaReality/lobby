@@ -32,7 +32,13 @@
       <a-entity geometry="primitive: circle; radius: 3" position="0 0.1 0" rotation="-90 18 0" material="color: #3A726A; metalness: 0.1; roughness: 0.7"></a-entity>
 
       <!-- menu -->
-      <a-entity menu position="0 1.5 -0.5"></a-entity>
+      <a-entity position="0 1.5 -0.5">
+        <a-entity menu></a-entity>
+        <a-entity position="0 0.33 -0.7">
+          <a-entity text="value: Hello World; align: center"></a-entity>
+          <a-entity geometry="primitive: plane; width: 0.5; height: 0.1" material="color: black; opacity: 0.8" position="0 0 -0.01"></a-entity>
+        </a-entity>
+      </a-entity>
 
       <!-- ground -->
       <a-entity geometry="primitive: circle; radius: 500;" rotation="-90 0 0" position="0 -0.1 0" material="color: #49567A; metalness: 0.1; roughness: 0.8"></a-entity>
