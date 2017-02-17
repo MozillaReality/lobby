@@ -18,7 +18,7 @@
   "author": "Casey Yee",
   "license": "MIT",
   "devDependencies": {
-    "aframe": "^0.4.1",
+    "aframe": "^0.5.0",
     "budo": "^9.4.5",
     "ghpages": "^0.0.10",
     "shx": "^0.2.2"
