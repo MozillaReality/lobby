@@ -3,6 +3,8 @@ var TWEEN = require('tween.js');
 require('aframe-dev-components');
 require('aframe-look-at-component');
 require('aframe-gradient-sky');
+var extras = require('aframe-extras');
+extras.registerAll();
 
 require('./motion');
 require('./transition');
@@ -54,10 +56,19 @@ AFRAME.registerComponent('menu', {
         });
         bubble.className = 'bubble';
 
-        var jewel = document.createElement('a-entity');
-        jewel.setAttribute('mixin', 'jewel');
-        jewel.setAttribute('material', { color: self.colors[i]});
-        bubble.appendChild(jewel);
+        var favicon = sites[i].favicon;
+        var favEl;
+        if (favicon) {
+          var favEl = document.createElement('a-gltf-model');
+          favEl.setAttribute('src', favicon);
+          // favEl.setAttribute('mixin', 'gltf');
+        } else {
+          var favEl = document.createElement('a-entity');
+          favEl.setAttribute('mixin', 'jewel');
+          favEl.setAttribute('material', { color: self.colors[i]});
+        }
+
+        bubble.appendChild(favEl);
 
         var platform = document.createElement('a-entity');
         platform.setAttribute('mixin', 'platform');

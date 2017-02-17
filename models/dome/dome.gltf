@@ -2890,44 +2890,6 @@
         "KHR_materials_common"
     ],
     "materials": {
-        "material_Material": {
-            "extensions": {
-                "KHR_materials_common": {
-                    "technique": "PHONG",
-                    "values": {
-                        "ambient": [
-                            1.0,
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "diffuse": [
-                            0.64000004529953,
-                            0.64000004529953,
-                            0.64000004529953,
-                            1.0
-                        ],
-                        "doubleSided": false,
-                        "emission": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "shininess": 50,
-                        "specular": [
-                            0.5,
-                            0.5,
-                            0.5,
-                            1.0
-                        ],
-                        "transparency": 1.0,
-                        "transparent": false
-                    }
-                }
-            },
-            "name": "Material"
-        },
         "material_Material.001": {
             "extensions": {
                 "KHR_materials_common": {
@@ -3079,82 +3041,6 @@
                 }
             },
             "name": "Material.004"
-        },
-        "material_Material.005": {
-            "extensions": {
-                "KHR_materials_common": {
-                    "technique": "PHONG",
-                    "values": {
-                        "ambient": [
-                            1.0,
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "diffuse": [
-                            0.64000004529953,
-                            0.64000004529953,
-                            0.64000004529953,
-                            1.0
-                        ],
-                        "doubleSided": false,
-                        "emission": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "shininess": 50,
-                        "specular": [
-                            0.5,
-                            0.5,
-                            0.5,
-                            1.0
-                        ],
-                        "transparency": 1.0,
-                        "transparent": false
-                    }
-                }
-            },
-            "name": "Material.005"
-        },
-        "material_Material.006": {
-            "extensions": {
-                "KHR_materials_common": {
-                    "technique": "PHONG",
-                    "values": {
-                        "ambient": [
-                            1.0,
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "diffuse": [
-                            0.16152392327785492,
-                            0.16152392327785492,
-                            0.16152392327785492,
-                            1.0
-                        ],
-                        "doubleSided": false,
-                        "emission": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "shininess": 50,
-                        "specular": [
-                            0.2535373270511627,
-                            0.2535373270511627,
-                            0.2535373270511627,
-                            1.0
-                        ],
-                        "transparency": 1.0,
-                        "transparent": false
-                    }
-                }
-            },
-            "name": "Material.006"
         }
     },
     "meshes": {
@@ -4527,6 +4413,59 @@
             ],
             "name": "Icosphere"
         },
+        "node_scene_Scene_root": {
+            "children": [
+                "node_Cone.006",
+                "node_Cone.005",
+                "node_Cone.004",
+                "node_Cone.003",
+                "node_Cone.002",
+                "node_Cone.001",
+                "node_Cone",
+                "node_tree.019",
+                "node_tree.018",
+                "node_tree.017",
+                "node_tree.016",
+                "node_Cylinder.015",
+                "node_tree.015",
+                "node_tree.014",
+                "node_tree.013",
+                "node_tree.012",
+                "node_tree.011",
+                "node_tree.010",
+                "node_tree.009",
+                "node_tree.008",
+                "node_tree.007",
+                "node_tree.006",
+                "node_tree.005",
+                "node_tree.004",
+                "node_tree.003",
+                "node_tree.002",
+                "node_tree.001",
+                "node_tree",
+                "node_Icosphere",
+                "node_Camera"
+            ],
+            "matrix": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                -1.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "name": "node_scene_Scene_root"
+        },
         "node_tree": {
             "children": [
                 "node_Cylinder",
@@ -5068,36 +5007,7 @@
             },
             "name": "Scene",
             "nodes": [
-                "node_Cone.006",
-                "node_Cone.005",
-                "node_Cone.004",
-                "node_Cone.003",
-                "node_Cone.002",
-                "node_Cone.001",
-                "node_Cone",
-                "node_tree.019",
-                "node_tree.018",
-                "node_tree.017",
-                "node_tree.016",
-                "node_Cylinder.015",
-                "node_tree.015",
-                "node_tree.014",
-                "node_tree.013",
-                "node_tree.012",
-                "node_tree.011",
-                "node_tree.010",
-                "node_tree.009",
-                "node_tree.008",
-                "node_tree.007",
-                "node_tree.006",
-                "node_tree.005",
-                "node_tree.004",
-                "node_tree.003",
-                "node_tree.002",
-                "node_tree.001",
-                "node_tree",
-                "node_Icosphere",
-                "node_Camera"
+                "node_scene_Scene_root"
             ]
         }
     }

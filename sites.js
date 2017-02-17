@@ -1,7 +1,8 @@
 module.exports = [
 {
   name: 'Puzzle Rain',
-  url: 'https://mozvr.com/puzzle-rain/'
+  url: 'https://mozvr.com/puzzle-rain/',
+  favicon: 'models/puzzle-rain/puzzle-rain.gltf'
 },
 {
   name: 'A-Painter',
