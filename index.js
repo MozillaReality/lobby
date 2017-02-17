@@ -61,7 +61,6 @@ AFRAME.registerComponent('menu', {
         if (favicon) {
           var favEl = document.createElement('a-gltf-model');
           favEl.setAttribute('src', favicon);
-          // favEl.setAttribute('mixin', 'gltf');
         } else {
           var favEl = document.createElement('a-entity');
           favEl.setAttribute('mixin', 'jewel');
