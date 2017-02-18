@@ -1,22 +1,14 @@
 var AFRAME = require('aframe');
 var TWEEN = require('tween.js');
-require('aframe-dev-components');
+
 require('aframe-look-at-component');
 require('aframe-gradient-sky');
-var extras = require('aframe-extras');
-extras.registerAll();
 
 require('./motion');
 require('./transition');
 require('./clouds');
 
 var sites = require('./sites');
-
-// var physics = require('aframe-physics-system');
-// var widgets = require('aframe-ui-widgets');
-// physics.registerAll();
-
-
 
 AFRAME.registerComponent('menu', {
   init: function () {

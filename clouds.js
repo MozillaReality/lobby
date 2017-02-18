@@ -1,5 +1,3 @@
-var ExplodeModifier = require('./lib/ExplodeModifier');
-
 AFRAME.registerComponent('clouds', {
   init: function () {
     var self = this;

@@ -1,4 +1,4 @@
-var ExplodeModifier = require('./lib/ExplodeModifier');
+// var ExplodeModifier = require('./lib/ExplodeModifier');
 
 AFRAME.registerComponent('transition', {
   init: function () {
@@ -21,8 +21,8 @@ AFRAME.registerComponent('transition', {
     entity.addEventListener('loaded', function () {
       var mesh = entity.getObject3D('mesh');
       var geometry = mesh.geometry;
-      var explodeModifier = new ExplodeModifier();
-      explodeModifier.modify(geometry);
+      // var explodeModifier = new ExplodeModifier();
+      // explodeModifier.modify(geometry);
 
       // for (var i = 0; i < geometry.vertices.length; i++) {
       //   geometry.vertices[i].
