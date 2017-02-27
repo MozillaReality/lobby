@@ -11,10 +11,10 @@ AFRAME.registerComponent('transition', {
       buffer: false
     });
 
-    entity.setAttribute('position', { y: 1 })
     entity.setAttribute('material', {
-      color: 'black``',
-      side: 'front',
+      color: 'black',
+      shader: 'flat',
+      side: 'back',
       opacity: 0
     });
 

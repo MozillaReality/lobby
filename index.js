@@ -28,6 +28,7 @@ AFRAME.registerComponent('menu', {
 
     this.loaded = 0;
     this.bubbles = [];
+    this.transitioning = false;
 
     var controllers = document.querySelectorAll('a-entity[hand-controls]');
     this.controllers = Array.prototype.slice.call(controllers);
@@ -83,9 +84,12 @@ AFRAME.registerComponent('menu', {
         });
 
         bubble.addEventListener('click', function (e) {
-          var url = e.detail.target.dataset.url;
-          console.log('navigating', url);
-          self.navigate(url);
+          var target = e.detail.target;
+          var url = target.dataset.url;
+          if (!self.transitioning) {
+            self.transitioning = true;
+            self.navigate(url, target);
+          }
         });
 
         bubble.addEventListener('mouseenter', function (e) {
@@ -104,14 +108,16 @@ AFRAME.registerComponent('menu', {
     });
   },
 
-  navigate: function(url) {
+  navigate: function(url, bubble) {
     var transition = document.querySelector('a-entity[transition]').components.transition;
-
-    console.log('Navigating to ', url);
-
-    transition.out().then(function () {
-     window.location.href = url;
-    });
+    this.selectMenu(bubble)
+      .then(function () {
+        return transition.out();
+      })
+      .then(function () {
+        console.log('Navigating to ', url);
+        window.location.href = url;
+      });
   },
 
   play: function () {
@@ -121,10 +127,37 @@ AFRAME.registerComponent('menu', {
   pause: function () {
   },
 
+  selectMenu: function (target) {
+    var self = this;
+    return new Promise(function (resolve, reject) {
+      self.bubbles.forEach(function (bubble, i) {
+        var position = bubble.getAttribute('position');
+        var tween = new TWEEN.Tween({ y: position.y, scale: 1 })
+          .to({ y: position.y + 0.25, scale: 0 }, 1000)
+          .delay(150 * i)
+          .onUpdate(function () {
+            if (target === bubble) return;
+            bubble.setAttribute('position', {
+              y: this.y
+            })
+            bubble.setAttribute('scale', {
+              x: this.scale,
+              y: this.scale,
+              z: this.scale
+            })
+          })
+          .onComplete(function () {
+            resolve();
+          })
+          .start();
+      });
+
+    });
+  },
+
   showMenu: function () {
     var self = this;
     var el = this.el;
-
     this.bubbles.forEach(function (bubble, i) {
       var position = bubble.getAttribute('position');
       var startY = position.y + 0.25;
