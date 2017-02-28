@@ -98,6 +98,7 @@ AFRAME.registerComponent('menu', {
           var name = target.dataset.name;
           if (!self.transitioning) {
             self.transitioning = true;
+            document.querySelector('#welcome').setAttribute('visible', false);
             var titleEl = document.querySelector('#site-title');
             titleEl.setAttribute('text', { value: name });
             var urlEl = document.querySelector('#site-url');
@@ -127,14 +128,14 @@ AFRAME.registerComponent('menu', {
     var title = document.querySelector('a-entity[title]').components.title;
     this.selectMenu(bubble)
       .then(function () {
-        return transition.out(name, url);
-      })
-      .then(function () {
         return title.show();
       })
       .then(function () {
+        return transition.out(name, url);
+      })
+      .then(function () {
         console.log('Navigating to ', url);
-        window.location.href = url;
+        //window.location.href = url;
       });
   },
 
@@ -186,7 +187,9 @@ AFRAME.registerComponent('menu', {
             }
           })
           .chain(tweenOut)
-          .onComplete(resolve)
+          .onComplete(function () {
+            resolve();
+          })
           .start()
       });
 

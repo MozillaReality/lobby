@@ -7,7 +7,7 @@ AFRAME.registerComponent('transition', {
     var entity = document.createElement('a-entity');
     entity.setAttribute('geometry', {
       primitive: 'sphere',
-      radius: 1.5,
+      radius: 0.5,
       buffer: false
     });
 
