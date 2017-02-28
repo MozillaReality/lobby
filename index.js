@@ -96,6 +96,7 @@ AFRAME.registerComponent('menu', {
           var target = e.detail.target;
           var url = target.dataset.url;
           var name = target.dataset.name;
+          if (url === undefined) return;
           if (!self.transitioning) {
             self.transitioning = true;
             document.querySelector('#welcome').setAttribute('visible', false);
@@ -135,7 +136,7 @@ AFRAME.registerComponent('menu', {
       })
       .then(function () {
         console.log('Navigating to ', url);
-        //window.location.href = url;
+        window.location.href = url;
       });
   },
 
