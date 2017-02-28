@@ -19,6 +19,7 @@
         <a-mixin id="platform" geometry="primitive: cylinder; radius: 0.08; height: 0.01;" material="color: #182E29" position="0 -0.1 0"></a-mixin>
         <a-mixin id="hovered" material="color: darkblue"></a-mixin>
         <a-mixin id="cloud" geometry="primitive: plane; width: 1, height: 1" material="color: #F5DCFF; opacity: 0.4; side: front" rotation="90 0 0"></a-mixin>
+        <a-mixin id="label" text="font: exo2bold"></a-mixin>
       </a-assets>
       <a-gradient-sky material="shader: gradient; topColor: 213, 157, 213; bottomColor: 109, 146, 188;"></a-gradient-sky>
 
@@ -35,9 +36,10 @@
       <!-- menu -->
       <a-entity position="0 1.5 -0.5">
         <a-entity menu></a-entity>
-        <a-entity position="0 0.33 -0.7">
-          <a-entity text="value: Hello World; align: center"></a-entity>
-          <a-entity geometry="primitive: plane; width: 0.5; height: 0.1" material="color: black; opacity: 0.8" position="0 0 -0.01"></a-entity>
+        <a-entity position="0 0.5 -0.7">
+          <a-entity text="width: 3; value: Welcome!; align: center; font: exo2bold"></a-entity>
+
+          <!-- <a-entity geometry="primitive: plane; width: 0.5; height: 0.1" material="color: black; opacity: 0.8" position="0 0 -0.01"></a-entity> -->
         </a-entity>
       </a-entity>
 
@@ -51,12 +53,20 @@
       <a-entity hand-controls="right"></a-entity>
 
       <a-entity daydream-controller geometry="primitive: sphere; radius: 0.1" material="color: red"></a-entity>
+
+
+      <!-- site title text -->
+      <a-entity title position="0 1.5 -0.7" visible="false">
+        <a-entity id="site-title" position="0 0.15 0" text="width: 3; value: Site Name; align: center; font: exo2bold; opacity: 0"></a-entity>
+        <a-entity id="site-url" text="width: 1; value: www.sitename.com; align: center; opacity: 0"></a-entity>
+      </a-entity>
+
       <a-camera>
         <a-entity transition></a-entity>
         <a-entity cursor
           raycaster="far: 20; interval: 1000; objects: .bubble"
-          position="0 0 -1"
-          geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
+          position="0 0 -0.5"
+          geometry="primitive: ring; radiusInner: 0.005; radiusOuter: 0.01"
           material="color: #9167A1; shader: flat">
       </a-camera>
     </a-scene>

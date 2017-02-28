@@ -6,6 +6,7 @@ require('aframe-gradient-sky');
 
 require('./motion');
 require('./transition');
+require('./title');
 require('./clouds');
 
 var sites = require('./sites');
@@ -46,6 +47,7 @@ AFRAME.registerComponent('menu', {
         bubble.setAttribute('position', { x: x, y: 0, z: z });
         bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
         bubble.setAttribute('data-url', sites[i].url);
+        bubble.setAttribute('data-name', sites[i].name)
         bubble.setAttribute('bob-y', { offset: 400 * i });
         bubble.className = 'bubble';
 
@@ -70,6 +72,7 @@ AFRAME.registerComponent('menu', {
 
         // bubble text label
         var text = document.createElement('a-entity');
+        text.setAttribute('mixin', 'label');
         text.setAttribute('text', {
           value: sites[i].name,
           align: 'center'
@@ -87,9 +90,14 @@ AFRAME.registerComponent('menu', {
         bubble.addEventListener('click', function (e) {
           var target = e.detail.target;
           var url = target.dataset.url;
+          var name = target.dataset.name;
           if (!self.transitioning) {
             self.transitioning = true;
-            self.navigate(url, target);
+            var titleEl = document.querySelector('#site-title');
+            titleEl.setAttribute('text', { value: name });
+            var urlEl = document.querySelector('#site-url');
+            urlEl.setAttribute('text', { value: url });
+            self.navigate(name, url, target);
           }
         });
 
@@ -109,15 +117,19 @@ AFRAME.registerComponent('menu', {
     });
   },
 
-  navigate: function(url, bubble) {
+  navigate: function(name, url, bubble) {
     var transition = document.querySelector('a-entity[transition]').components.transition;
+    var title = document.querySelector('a-entity[title]').components.title;
     this.selectMenu(bubble)
       .then(function () {
-        return transition.out();
+        return transition.out(name, url);
+      })
+      .then(function () {
+        return title.show();
       })
       .then(function () {
         console.log('Navigating to ', url);
-        window.location.href = url;
+        //window.location.href = url;
       });
   },
 
@@ -137,7 +149,7 @@ AFRAME.registerComponent('menu', {
           .to({ y: position.y + 0.25, scale: 0 }, 1000)
           .delay(150 * i)
           .onUpdate(function () {
-            if (target === bubble) return;
+            // if (target === bubble) return;
             bubble.setAttribute('position', {
               y: this.y
             })
