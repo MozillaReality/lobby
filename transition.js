@@ -44,6 +44,7 @@ AFRAME.registerComponent('transition', {
               opacity: this.opacity
             });
           })
+          .delay(1000)
           .onComplete(function () {
             resolve();
           })

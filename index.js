@@ -158,15 +158,6 @@ AFRAME.registerComponent('menu', {
         var toZ = (target === bubble) ? -self.radius : position.z;
         var toScale = (target === bubble) ? 1.5 : 0;
 
-        var tweenOut = new TWEEN.Tween({ scale: toScale })
-          .to({ scale: 0 }, 500)
-          .delay(3000)
-          .onUpdate(function () {
-            bubble.setAttribute('scale', {
-              x: this.scale, y: this.scale, z: this.scale
-            })
-          })
-
         var tween = new TWEEN.Tween({ x: position.x, y: position.y, z: position.z, scale: 1 })
           .to({ x: toX, y: toY, z: toZ, scale: toScale }, 600)
           .easing(TWEEN.Easing.Back.InOut)
@@ -178,7 +169,6 @@ AFRAME.registerComponent('menu', {
             bubble.setAttribute('scale', {
               x: this.scale, y: this.scale, z: this.scale
             })
-            bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 })
           })
           .onStart(function () {
             if (target === bubble) {
@@ -186,13 +176,9 @@ AFRAME.registerComponent('menu', {
               bubble.querySelector('.platform').setAttribute('visible', false);
             }
           })
-          .chain(tweenOut)
-          .onComplete(function () {
-            resolve();
-          })
+          .onComplete(resolve)
           .start()
       });
-
     });
   },
 
