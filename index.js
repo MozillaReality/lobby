@@ -31,11 +31,12 @@ AFRAME.registerComponent('menu', {
     var controllers = document.querySelectorAll('a-entity[hand-controls]');
     this.controllers = Array.prototype.slice.call(controllers);
 
-    this.ready = new Promise(function (resolve, reject) {
-      var radius = 0.5; // radius of menu around user.
-      var startAngle = -Math.PI / sites.length;
-      var angle = startAngle / 2;
+    var radius = this.radius = 0.5; // radius of menu around user.
+    var startAngle = -Math.PI / sites.length;
+    var angle = startAngle / 2;
 
+
+    this.ready = new Promise(function (resolve, reject) {
       for (var i = 0; i < sites.length; i++) {
         var x = radius * Math.cos(angle);
         var z = radius * Math.sin(angle);
@@ -62,17 +63,21 @@ AFRAME.registerComponent('menu', {
           favEl.setAttribute('mixin', 'jewel');
           favEl.setAttribute('material', { color: self.colors[i]});
         }
+        favEl.setAttribute('rotate-y-axis', '');
         bubble.appendChild(favEl);
 
         // bubble platform
         var platform = document.createElement('a-entity');
         platform.setAttribute('mixin', 'platform');
-        platform.setAttribute('position', { x: x, y: -0.16, z: z });
-        self.el.appendChild(platform);
+        platform.setAttribute('position', { y: -0.16 });
+        platform.className = 'platform';
+        // platform.setAttribute('position', { x: x, y: -0.16, z: z });
+        bubble.appendChild(platform);
 
         // bubble text label
         var text = document.createElement('a-entity');
         text.setAttribute('mixin', 'label');
+        text.className = 'title';
         text.setAttribute('text', {
           value: sites[i].name,
           align: 'center'
@@ -101,15 +106,15 @@ AFRAME.registerComponent('menu', {
           }
         });
 
-        bubble.addEventListener('mouseenter', function (e) {
-          var el = e.detail.target;
-          el.setAttribute('mixin', self.bubbleMixin + ' ' + self.bubbleHover);
-        });
+        // bubble.addEventListener('mouseenter', function (e) {
+        //   var el = e.detail.target;
+        //   el.setAttribute('mixin', self.bubbleMixin + ' ' + self.bubbleHover);
+        // });
 
-        bubble.addEventListener('mouseleave', function (e) {
-          var el = e.detail.target;
-          el.setAttribute('mixin', self.bubbleMixin);
-        });
+        // bubble.addEventListener('mouseleave', function (e) {
+        //   var el = e.detail.target;
+        //   el.setAttribute('mixin', self.bubbleMixin);
+        // });
 
         self.bubbles.push(bubble);
         self.el.appendChild(bubble);
@@ -129,7 +134,7 @@ AFRAME.registerComponent('menu', {
       })
       .then(function () {
         console.log('Navigating to ', url);
-        //window.location.href = url;
+        window.location.href = url;
       });
   },
 
@@ -145,24 +150,44 @@ AFRAME.registerComponent('menu', {
     return new Promise(function (resolve, reject) {
       self.bubbles.forEach(function (bubble, i) {
         var position = bubble.getAttribute('position');
-        var tween = new TWEEN.Tween({ y: position.y, scale: 1 })
-          .to({ y: position.y + 0.25, scale: 0 }, 1000)
-          .delay(150 * i)
+
+        var delay = (target === bubble) ? delay = self.bubbles.length * 250 : i * 150;
+        var toX = (target === bubble) ? 0 : position.x;
+        var toY = (target === bubble) ? 0 : position.y + 0.1;
+        var toZ = (target === bubble) ? -self.radius : position.z;
+        var toScale = (target === bubble) ? 1.5 : 0;
+
+        var tweenOut = new TWEEN.Tween({ scale: toScale })
+          .to({ scale: 0 }, 500)
+          .delay(3000)
           .onUpdate(function () {
-            // if (target === bubble) return;
+            bubble.setAttribute('scale', {
+              x: this.scale, y: this.scale, z: this.scale
+            })
+          })
+
+        var tween = new TWEEN.Tween({ x: position.x, y: position.y, z: position.z, scale: 1 })
+          .to({ x: toX, y: toY, z: toZ, scale: toScale }, 600)
+          .easing(TWEEN.Easing.Back.InOut)
+          .delay(delay)
+          .onUpdate(function () {
             bubble.setAttribute('position', {
-              y: this.y
+              x: this.x, y: this.y, z: this.z
             })
             bubble.setAttribute('scale', {
-              x: this.scale,
-              y: this.scale,
-              z: this.scale
+              x: this.scale, y: this.scale, z: this.scale
             })
+            bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 })
           })
-          .onComplete(function () {
-            resolve();
+          .onStart(function () {
+            if (target === bubble) {
+              bubble.querySelector('.title').setAttribute('visible', false);
+              bubble.querySelector('.platform').setAttribute('visible', false);
+            }
           })
-          .start();
+          .chain(tweenOut)
+          .onComplete(resolve)
+          .start()
       });
 
     });
@@ -185,9 +210,7 @@ AFRAME.registerComponent('menu', {
             y: this.y
           });
           bubble.setAttribute('scale', {
-            x: this.scale,
-            y: this.scale,
-            z: this.scale
+            x: this.scale, y: this.scale, z: this.scale
           });
         })
         .start();
