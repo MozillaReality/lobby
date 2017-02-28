@@ -23,9 +23,6 @@ AFRAME.registerComponent('menu', {
       0x24DFBF
     ];
 
-    var radius = 0.5;         // radius of menu around user.
-    var angle = Math.PI / 2;  // angle of menu.
-
     this.loaded = 0;
     this.bubbles = [];
     this.transitioning = false;
@@ -34,21 +31,25 @@ AFRAME.registerComponent('menu', {
     this.controllers = Array.prototype.slice.call(controllers);
 
     this.ready = new Promise(function (resolve, reject) {
+      var radius = 0.5; // radius of menu around user.
+      var startAngle = -Math.PI / sites.length;
+      var angle = startAngle / 2;
+
       for (var i = 0; i < sites.length; i++) {
+        var x = radius * Math.cos(angle);
+        var z = radius * Math.sin(angle);
+        angle += startAngle;
+
+        // bubble icons
         var bubble = document.createElement('a-entity');
         bubble.setAttribute('mixin', self.bubbleMixin);
-
-        var x = radius * Math.cos(-2 * i * angle / sites.length);
-        var z = radius * Math.sin(-2 * i * angle / sites.length);
-
         bubble.setAttribute('position', { x: x, y: 0, z: z });
         bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
         bubble.setAttribute('data-url', sites[i].url);
-        bubble.setAttribute('bob-y', {
-          offset: 400 * i
-        });
+        bubble.setAttribute('bob-y', { offset: 400 * i });
         bubble.className = 'bubble';
 
+        // favicon
         var favicon = sites[i].favicon;
         var favEl;
         if (favicon) {
@@ -59,15 +60,15 @@ AFRAME.registerComponent('menu', {
           favEl.setAttribute('mixin', 'jewel');
           favEl.setAttribute('material', { color: self.colors[i]});
         }
-
         bubble.appendChild(favEl);
 
+        // bubble platform
         var platform = document.createElement('a-entity');
         platform.setAttribute('mixin', 'platform');
         platform.setAttribute('position', { x: x, y: -0.16, z: z });
-
         self.el.appendChild(platform);
 
+        // bubble text label
         var text = document.createElement('a-entity');
         text.setAttribute('text', {
           value: sites[i].name,
