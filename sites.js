@@ -1,4 +1,4 @@
-var IS_DEV = window.location.port !== 80 && window.location.port !== 443;
+var IS_DEV = window.location.port && window.location.hostname.indexOf('.').length === 1;
 var ORIGIN_NO_PORT = window.location.protocol + '//' + window.location.hostname;
 
 if (IS_DEV) {
