@@ -1,3 +1,4 @@
+*.pem
 .DS_Store
 _prod
 node_modules
