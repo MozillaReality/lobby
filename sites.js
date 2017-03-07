@@ -5,29 +5,37 @@ var ORIGIN_NO_PORT = window.location.protocol + '//' + window.location.hostname;
   var webvrAgentScript = doc.querySelector('script[src*="agent"][src*="/client.js"]');
   var webvrAgentScriptSrcLocal = ORIGIN_NO_PORT + ':4040/client.js';
 
-  var req = new Image();
-  req.addEventListener('load', function () {
-    if (webvrAgentScript) {
-      if (IS_DEV) {
-        webvrAgentScript.abort = true;
-        webvrAgentScript.src = webvrAgentScript.src.replace(/(.+)client.js/, ORIGIN_NO_PORT + ':4040/client.js');
+  if (IS_DEV) {
+    var req = new Image();
+    req.addEventListener('load', function () {
+      if (webvrAgentScript) {
+        if (IS_DEV) {
+          webvrAgentScript.abort = true;
+          webvrAgentScript.src = webvrAgentScript.src.replace(/(.+)client.js/, ORIGIN_NO_PORT + ':4040/client.js');
+        }
+      } else {
+        webvrAgentScript = doc.createElement('script');
+        webvrAgentScript.src = IS_DEV ? webvrAgentScriptSrcLocal : 'https://agent.webvr.rocks/client.js';
+        webvrAgentScript.async = webvrAgentScript.defer = true;
+        doc.head.appendChild(webvrAgentScript);
       }
-    } else {
-      webvrAgentScript = doc.createElement('script');
-      webvrAgentScript.src = IS_DEV ? webvrAgentScriptSrcLocal : 'https://agent.webvr.rocks/client.js';
-      webvrAgentScript.async = webvrAgentScript.defer = true;
-      doc.head.appendChild(webvrAgentScript);
-    }
-  });
-  req.addEventListener('error', function (err) {
+    });
+    req.addEventListener('error', function (err) {
+      injectProdScriptIfMissing();
+    });
+    req.src = ORIGIN_NO_PORT + ':4040/favicon.ico';
+  } else {
+    injectProdScriptIfMissing();
+  }
+
+  function injectProdScriptIfMissing () {
     if (!webvrAgentScript) {
       webvrAgentScript = doc.createElement('script');
       webvrAgentScript.src = 'https://agent.webvr.rocks/client.js';
       webvrAgentScript.async = webvrAgentScript.defer = true;
       doc.head.appendChild(webvrAgentScript);
     }
-  });
-  req.src = ORIGIN_NO_PORT + ':4040/favicon.ico';
+  }
 })(window, document);
 
 var sites = [
