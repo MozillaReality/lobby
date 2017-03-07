@@ -1,5 +1,9 @@
+/* global require */
+
 var AFRAME = require('aframe');
 var TWEEN = require('tween.js');
+
+var THREE = AFRAME.THREE;
 
 require('aframe-look-at-component');
 require('aframe-gradient-sky');
@@ -9,7 +13,7 @@ require('./transition');
 require('./title');
 require('./clouds');
 
-var sites = require('./sites');
+var getSites = require('./sites');
 
 AFRAME.registerComponent('menu', {
   init: function () {
@@ -31,96 +35,104 @@ AFRAME.registerComponent('menu', {
     var controllers = document.querySelectorAll('a-entity[hand-controls]');
     this.controllers = Array.prototype.slice.call(controllers);
 
-    var radius = this.radius = 0.5; // radius of menu around user.
-    var startAngle = -Math.PI / sites.length;
-    var angle = startAngle / 2;
-
-
     this.ready = new Promise(function (resolve, reject) {
-      for (var i = 0; i < sites.length; i++) {
-        var x = radius * Math.cos(angle);
-        var z = radius * Math.sin(angle);
-        angle += startAngle;
+      getSites().then(function (sites) {
+        var radius = self.radius = 0.5; // radius of menu around user.
+        var startAngle = -Math.PI / sites.length;
+        var angle = startAngle / 2;
 
-        // bubble icons
-        var bubble = document.createElement('a-entity');
-        bubble.setAttribute('mixin', self.bubbleMixin);
-        bubble.setAttribute('position', { x: x, y: 0, z: z });
-        bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
-        bubble.setAttribute('data-url', sites[i].url);
-        bubble.setAttribute('data-name', sites[i].name)
-        bubble.setAttribute('bob-y', { offset: 400 * i });
-        bubble.className = 'bubble';
+        sites.forEach(function (site, idx) {
+          var x = radius * Math.cos(angle);
+          var z = radius * Math.sin(angle);
+          angle += startAngle;
 
-        // favicon
-        var favicon = sites[i].favicon;
-        var favEl;
-        if (favicon) {
-          var favEl = document.createElement('a-gltf-model');
-          favEl.setAttribute('src', favicon);
-        } else {
-          var favEl = document.createElement('a-entity');
-          favEl.setAttribute('mixin', 'jewel');
-          favEl.setAttribute('material', { color: self.colors[i]});
-        }
-        favEl.setAttribute('rotate-y-axis', '');
-        bubble.appendChild(favEl);
+          // bubble icons
+          var bubble = document.createElement('a-entity');
+          bubble.setAttribute('mixin', self.bubbleMixin);
+          bubble.setAttribute('position', { x: x, y: 0, z: z });
+          bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
+          bubble.setAttribute('data-url', site.start_url);
+          bubble.setAttribute('data-name', site.name);
+          bubble.setAttribute('bob-y', { offset: 400 * idx });
+          bubble.className = 'bubble';
 
-        // bubble platform
-        var platform = document.createElement('a-entity');
-        platform.setAttribute('mixin', 'platform');
-        platform.setAttribute('position', { y: -0.16 });
-        platform.className = 'platform';
-        // platform.setAttribute('position', { x: x, y: -0.16, z: z });
-        bubble.appendChild(platform);
-
-        // bubble text label
-        var text = document.createElement('a-entity');
-        text.setAttribute('mixin', 'label');
-        text.className = 'title';
-        text.setAttribute('text', {
-          value: sites[i].name,
-          align: 'center'
-        });
-        text.setAttribute('position', { x: 0, y: 0.15, z: 0 });
-        bubble.appendChild(text);
-
-        bubble.addEventListener('loaded', function () {
-          self.loaded++;
-          if (self.loaded === sites.length) {
-            resolve();
+          // favicon
+          var favicon = site.processed_gltf_icon;
+          var favEl;
+          if (favicon) {
+            favEl = document.createElement('a-gltf-model');
+            favEl.setAttribute('src', favicon);
+          } else {
+            favEl = document.createElement('a-entity');
+            favEl.setAttribute('mixin', 'jewel');
+            favEl.setAttribute('material', { color: self.colors[idx]});
           }
+          favEl.setAttribute('rotate-y-axis', '');
+          bubble.appendChild(favEl);
+
+          // bubble platform
+          var platform = document.createElement('a-entity');
+          platform.setAttribute('mixin', 'platform');
+          platform.setAttribute('position', { y: -0.16 });
+          platform.className = 'platform';
+          // platform.setAttribute('position', { x: x, y: -0.16, z: z });
+          bubble.appendChild(platform);
+
+          // bubble text label
+          var text = document.createElement('a-entity');
+          text.setAttribute('mixin', 'label');
+          text.className = 'title';
+          text.setAttribute('text', {
+            value: site.name,
+            align: 'center'
+          });
+          text.setAttribute('position', { x: 0, y: 0.15, z: 0 });
+          bubble.appendChild(text);
+
+          bubble.addEventListener('loaded', function () {
+            self.loaded++;
+            if (self.loaded === sites.length) {
+              resolve();
+            }
+          });
+
+          bubble.addEventListener('click', function (e) {
+            var target = e.detail.target;
+            var url = target.dataset.url;
+            var name = target.dataset.name;
+            if (url === undefined) { return; }
+            if (!self.transitioning) {
+              self.transitioning = true;
+              var welcomeEl = document.querySelector('#welcome');
+              if (welcomeEl) {
+                welcomeEl.setAttribute('visible', false);
+              }
+              var titleEl = document.querySelector('#site-title');
+              if (titleEl) {
+                titleEl.setAttribute('text', { value: name });
+              }
+              var urlEl = document.querySelector('#site-url');
+              if (urlEl) {
+                urlEl.setAttribute('text', { value: url });
+              }
+              self.navigate(name, url, target);
+            }
+          });
+
+          // bubble.addEventListener('mouseenter', function (e) {
+          //   var el = e.detail.target;
+          //   el.setAttribute('mixin', self.bubbleMixin + ' ' + self.bubbleHover);
+          // });
+
+          // bubble.addEventListener('mouseleave', function (e) {
+          //   var el = e.detail.target;
+          //   el.setAttribute('mixin', self.bubbleMixin);
+          // });
+
+          self.bubbles.push(bubble);
+          self.el.appendChild(bubble);
         });
-
-        bubble.addEventListener('click', function (e) {
-          var target = e.detail.target;
-          var url = target.dataset.url;
-          var name = target.dataset.name;
-          if (url === undefined) return;
-          if (!self.transitioning) {
-            self.transitioning = true;
-            document.querySelector('#welcome').setAttribute('visible', false);
-            var titleEl = document.querySelector('#site-title');
-            titleEl.setAttribute('text', { value: name });
-            var urlEl = document.querySelector('#site-url');
-            urlEl.setAttribute('text', { value: url });
-            self.navigate(name, url, target);
-          }
-        });
-
-        // bubble.addEventListener('mouseenter', function (e) {
-        //   var el = e.detail.target;
-        //   el.setAttribute('mixin', self.bubbleMixin + ' ' + self.bubbleHover);
-        // });
-
-        // bubble.addEventListener('mouseleave', function (e) {
-        //   var el = e.detail.target;
-        //   el.setAttribute('mixin', self.bubbleMixin);
-        // });
-
-        self.bubbles.push(bubble);
-        self.el.appendChild(bubble);
-      }
+      });
     });
   },
 
@@ -159,17 +171,17 @@ AFRAME.registerComponent('menu', {
         var toZ = (target === bubble) ? -self.radius : position.z;
         var toScale = (target === bubble) ? 1.5 : 0;
 
-        var tween = new TWEEN.Tween({ x: position.x, y: position.y, z: position.z, scale: 1 })
+        new TWEEN.Tween({ x: position.x, y: position.y, z: position.z, scale: 1 })
           .to({ x: toX, y: toY, z: toZ, scale: toScale }, 600)
           .easing(TWEEN.Easing.Back.InOut)
           .delay(delay)
           .onUpdate(function () {
             bubble.setAttribute('position', {
               x: this.x, y: this.y, z: this.z
-            })
+            });
             bubble.setAttribute('scale', {
               x: this.scale, y: this.scale, z: this.scale
-            })
+            });
           })
           .onStart(function () {
             if (target === bubble) {
@@ -178,20 +190,18 @@ AFRAME.registerComponent('menu', {
             }
           })
           .onComplete(resolve)
-          .start()
+          .start();
       });
     });
   },
 
   showMenu: function () {
-    var self = this;
-    var el = this.el;
     this.bubbles.forEach(function (bubble, i) {
       var position = bubble.getAttribute('position');
       var startY = position.y + 0.25;
       bubble.setAttribute('position', { y: startY });
       bubble.setAttribute('scale', { x: 0, y: 0, z: 0 });
-      var tween = new TWEEN.Tween({ y: startY, scale: 0 })
+      new TWEEN.Tween({ y: startY, scale: 0 })
         .to({ y: position.y, scale: 1 }, 1000)
         .delay(150 * i)
         .easing(TWEEN.Easing.Back.InOut)
@@ -220,7 +230,7 @@ AFRAME.registerComponent('menu', {
         if (collision) {
           //console.log('collision');
         }
-      })
+      });
     });
   }
 });

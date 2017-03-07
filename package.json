@@ -9,7 +9,7 @@
     "predev_https": "openssl req -new -newkey rsa:4096 -sha512 -days 365 -nodes -x509 -subj '/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com' -keyout key.pem -out cert.pem",
     "dev_https": "npm run dev -- --ssl",
     "prebuild": "shx rm -rf _prod",
-    "build": "shx mkdir -p _prod && shx cp -R {index.html,*.js,*.md,models,*.webmanifest} _prod/. && shx mkdir -p _prod && browserify index.js -o _prod/build.js",
+    "build": "shx mkdir -p _prod && shx cp -R {index.html,*.js,*.md,*.webmanifest,img,models} _prod/. && shx mkdir -p _prod && browserify index.js -o _prod/build.js",
     "predeploy": "npm run build",
     "deploy": "ghpages -p _prod",
     "deploy:cvan": "GHPAGES_REPO=\"cvan/webvr-lobby\" npm run deploy",
