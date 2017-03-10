@@ -15,6 +15,16 @@ require('./clouds');
 
 var getSites = require('./sites');
 
+
+function receiveMessage(event) {
+  var el = document.querySelector("#steam-name");
+  el.setAttribute('text', {
+    value: event.data
+  })
+}
+
+window.addEventListener("steam-user", receiveMessage, false);
+
 AFRAME.registerComponent('menu', {
   init: function () {
     var self = this;
