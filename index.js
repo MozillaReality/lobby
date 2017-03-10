@@ -23,7 +23,25 @@ function receiveMessage(event) {
   })
 }
 
+function friendConnect(event) {
+  document.querySelector('#friends').setAttribute('visible', true);
+  var friend = document.querySelector('#steam-friend-name');
+  friend.setAttribute('text', {
+    value: event.data + ' is online'
+  })
+};
+
+function friendDisconnect() {
+  document.querySelector('#friends').setAttribute('visible', false);
+}
+
+setTimeout(function() { friendConnect() }, 2000);
+setTimeout(function() { friendDisconnect() }, 3000);
+
 window.addEventListener("steam-user", receiveMessage, false);
+
+window.addEventListener("steam-friend-connect", friendConnect, false);
+window.addEventListener("steam-friend-disconnect", friendDisconnect, false);
 
 AFRAME.registerComponent('menu', {
   init: function () {
