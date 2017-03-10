@@ -18,11 +18,11 @@ function webvrLobby (opts) {
 
   var getSites = module.exports.sites = opts.sites || require('./sites');
 
-  // Turn `getSites` into a `Promise` if it's not one.
-  var getSitesIsPromise = !!(getSites && typeof getSites === 'function' && typeof getSites.then === 'function');
-  if (!getSitesIsPromise) {
-    getSites = Promise.resolve(getSites);
-  }
+  // if (getSites && Array.isArray(getSites)) {
+  //   getSites = Promise.resolve(getSites || []);
+  // } else {
+  //   getSites = Promise.resolve([]);
+  // }
 
   function receiveMessage (evt) {
     var data = evt.data;
