@@ -37,7 +37,7 @@ AFRAME.registerComponent('menu', {
 
     this.ready = new Promise(function (resolve, reject) {
       getSites().then(function (sites) {
-        var radius = self.radius = 0.5; // radius of menu around user.
+        var radius = self.radius = 0.65; // radius of menu around user.
         var startAngle = -Math.PI / sites.length;
         var angle = startAngle / 2;
 
@@ -86,7 +86,6 @@ AFRAME.registerComponent('menu', {
             value: site.name,
             align: 'center'
           });
-          text.setAttribute('position', { x: 0, y: 0.15, z: 0 });
           bubble.appendChild(text);
 
           bubble.addEventListener('loaded', function () {
