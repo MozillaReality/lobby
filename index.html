@@ -74,14 +74,14 @@
         <a-entity id="site-url" position="0 -0.1 0" text="width: 0.8; value: www.sitename.com; align: center; opacity: 0"></a-entity>
       </a-entity>
 
-      <a-camera>
+      <a-entity camera="userHeight: 1.6" look-controls wasd-controls>
         <a-entity transition></a-entity>
         <a-entity cursor
           raycaster="far: 20; interval: 1000; objects: .bubble"
           position="0 0 -0.5"
           geometry="primitive: ring; radiusInner: 0.005; radiusOuter: 0.01"
           material="color: #9167A1; shader: flat">
-      </a-camera>
+      </a-entity>
     </a-scene>
   </body>
 </html>
