@@ -63,8 +63,8 @@
       <a-entity light="color:#ffa27a; groundColor:#ff6f28; intensity:0.9;" position="40 11 -50" data-aframe-default-light="" aframe-injected=""></a-entity>
 
       <!-- controls -->
-      <a-entity hand-controls="left"></a-entity>
-      <a-entity hand-controls="right"></a-entity>
+      <a-entity hand-controls="left" aabb-collider="objects: .bubble"></a-entity>
+      <a-entity hand-controls="right" aabb-collider="objects: .bubble"></a-entity>
 
       <a-entity daydream-controller geometry="primitive: sphere; radius: 0.1" material="color: red"></a-entity>
 

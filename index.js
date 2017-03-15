@@ -15,6 +15,7 @@ function webvrLobby (opts) {
   module.exports.transition = require('./transition');
   module.exports.title = require('./title');
   module.exports.clouds = require('./clouds');
+  module.exports.aabb = require('./components/aabb-collider');
 
   var getSites = module.exports.sites = opts.sites || require('./sites');
 
@@ -187,28 +188,8 @@ function webvrLobby (opts) {
               }
             });
 
-            bubble.addEventListener('click', function (e) {
-              var target = e.detail.target;
-              var url = target.dataset.url;
-              var name = target.dataset.name;
-              if (url === undefined) { return; }
-              if (!self.transitioning) {
-                self.transitioning = true;
-                var welcomeEl = document.querySelector('#welcome');
-                if (welcomeEl) {
-                  welcomeEl.setAttribute('visible', false);
-                }
-                var titleEl = document.querySelector('#site-title');
-                if (titleEl) {
-                  titleEl.setAttribute('text', { value: name });
-                }
-                var urlEl = document.querySelector('#site-url');
-                if (urlEl) {
-                  urlEl.setAttribute('text', { value: url });
-                }
-                self.navigate(name, url, target);
-              }
-            });
+            bubble.addEventListener('click',self.handleInteraction.bind(self));
+            bubble.addEventListener('hit', self.handleInteraction.bind(self));
 
             // bubble.addEventListener('mouseenter', function (e) {
             //   var el = e.detail.target;
@@ -225,6 +206,30 @@ function webvrLobby (opts) {
           });
         });
       });
+    },
+
+    handleInteraction: function (e) {
+      var self = this;
+      var target = e.detail.target;
+      var url = target.dataset.url;
+      var name = target.dataset.name;
+      if (url === undefined) { return; }
+      if (!self.transitioning) {
+        self.transitioning = true;
+        var welcomeEl = document.querySelector('#welcome');
+        if (welcomeEl) {
+          welcomeEl.setAttribute('visible', false);
+        }
+        var titleEl = document.querySelector('#site-title');
+        if (titleEl) {
+          titleEl.setAttribute('text', { value: name });
+        }
+        var urlEl = document.querySelector('#site-url');
+        if (urlEl) {
+          urlEl.setAttribute('text', { value: url });
+        }
+        self.navigate(name, url, target);
+      }
     },
 
     navigate: function(name, url, bubble) {
