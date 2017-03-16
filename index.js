@@ -1,6 +1,8 @@
 /* jshint node: true */
 /* global require */
 
+var settings = require('./settings');
+
 function webvrLobby (opts) {
   opts = opts || {};
   var AFRAME = module.exports.AFRAME = opts.AFRAME || require('aframe');
@@ -108,10 +110,30 @@ function webvrLobby (opts) {
 
   window.addEventListener('message', receiveMessage);
 
+  var sceneEl = document.querySelector('a-scene');
+
+  if (sceneEl) {
+    if (sceneEl.hasLoaded) {
+      enableStats();
+    } else {
+      sceneEl.addEventListener('loaded', enableStats);
+    }
+  } else {
+    window.addEventListener('load', function () {
+      sceneEl = document.querySelector('a-scene');
+      enableStats();
+    });
+  }
+
+  function enableStats () {
+    if (settings.env === 'dev') {
+      sceneEl.setAttribute('stats', '');
+    }
+  }
+
   AFRAME.registerComponent('menu', {
     init: function () {
       var self = this;
-      this.bubbleMixin = 'bubble';
       this.bubbleHover = 'hovered';
       this.colors = [
         0x6C77E8,
