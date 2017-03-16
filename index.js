@@ -11,10 +11,10 @@ function webvrLobby (opts) {
   module.exports['aframe-look-at-component'] = opts['aframe-look-at-component'] || require('aframe-look-at-component');
   module.exports['aframe-gradient-sky'] = opts['aframe-gradient-sky'] || require('aframe-gradient-sky');
 
-  module.exports.motion = require('./components/motion');
-  module.exports.transition = require('./components/transition');
-  module.exports.title = require('./components/title');
-  module.exports.clouds = require('./components/clouds');
+  module.exports.motion = require('./motion');
+  module.exports.transition = require('./transition');
+  module.exports.title = require('./title');
+  module.exports.clouds = require('./clouds');
   module.exports.aabb = require('./components/aabb-collider');
 
   var getSites = module.exports.sites = opts.sites || require('./sites');

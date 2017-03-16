@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "aframe": "git://github.com/aframevr/aframe.git#master",
-    "aframe-daydream-controller-component": "^1.0.0",
     "aframe-gradient-sky": "^1.0.4",
     "aframe-look-at-component": "^0.2.0",
     "browserify": "^14.1.0",
