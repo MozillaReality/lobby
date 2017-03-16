@@ -4,7 +4,9 @@ var ORIGIN_NO_PORT = window.location.protocol + '//' + window.location.hostname;
 (function (win, doc) {
   var webvrAgentScript = doc.querySelector('script[src*="agent"][src*="/client.js"]');
   var webvrAgentScriptSrcLocal = ORIGIN_NO_PORT + ':4040/client.js';
-
+  var webvrAgentScriptSrcProd = 'https://cvan.ngrok.io/client.js';  // https://agent.webvr.rocks/client.js
+  var webvrAgentScriptSrc = IS_DEV ? webvrAgentScriptSrcLocal : webvrAgentScriptSrcProd;
+  
   if (IS_DEV) {
     var req = new Image();
     req.addEventListener('load', function () {
@@ -15,7 +17,7 @@ var ORIGIN_NO_PORT = window.location.protocol + '//' + window.location.hostname;
         }
       } else {
         webvrAgentScript = doc.createElement('script');
-        webvrAgentScript.src = IS_DEV ? webvrAgentScriptSrcLocal : 'https://agent.webvr.rocks/client.js';
+        webvrAgentScript.src = webvrAgentScriptSrc;
         webvrAgentScript.async = webvrAgentScript.defer = true;
         doc.head.appendChild(webvrAgentScript);
       }
@@ -31,7 +33,7 @@ var ORIGIN_NO_PORT = window.location.protocol + '//' + window.location.hostname;
   function injectProdScriptIfMissing () {
     if (!webvrAgentScript) {
       webvrAgentScript = doc.createElement('script');
-      webvrAgentScript.src = 'https://agent.webvr.rocks/client.js';
+      webvrAgentScript.src = webvrAgentScriptSrc;
       webvrAgentScript.async = webvrAgentScript.defer = true;
       doc.head.appendChild(webvrAgentScript);
     }
