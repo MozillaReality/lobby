@@ -135,6 +135,7 @@ function webvrLobby (opts) {
     init: function () {
       var self = this;
       this.bubbleHover = 'hovered';
+      this.bubbleMixin = 'bubble';
       this.colors = [
         0x6C77E8,
         0xE8A238,
