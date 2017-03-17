@@ -163,6 +163,7 @@ function webvrLobby (opts) {
 
             // bubble icons
             var bubble = document.createElement('a-entity');
+            bubble.setAttribute('mixin', self.bubbleMixin);
             bubble.setAttribute('position', { x: x, y: 0, z: z });
             bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
             bubble.setAttribute('data-url', site.start_url);
