@@ -240,7 +240,6 @@ function webvrLobby (opts) {
       var target = e.detail.target;
       var url = target.dataset.url;
       var name = target.dataset.name;
-      console.log('interacting', target);
       if (url === undefined) { return; }
       if (!self.transitioning) {
         self.transitioning = true;
