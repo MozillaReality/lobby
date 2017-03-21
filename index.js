@@ -12,6 +12,7 @@ function webvrLobby (opts) {
 
   module.exports['aframe-gradient-sky'] = opts['aframe-gradient-sky'] || require('aframe-gradient-sky');
   module.exports['aframe-dev-components'] = opts['aframe-dev-components'] || require('aframe-dev-components');
+  module.exports['aframe-daydream-controller-component'] = opts['aframe-daydream-controller-component'] || require('aframe-daydream-controller-component');
 
   module.exports.motion = require('./components/motion');
   module.exports.transition = require('./components/transition');
@@ -149,9 +150,6 @@ function webvrLobby (opts) {
       this.bubbles = [];
       this.transitioning = false;
 
-      var controllers = document.querySelectorAll('a-entity[hand-controls]');
-      this.controllers = Array.prototype.slice.call(controllers);
-
       this.ready = new Promise(function (resolve, reject) {
         getSites().then(function (sites) {
           var radius = self.radius = 0.65; // radius of menu around user.
@@ -217,6 +215,15 @@ function webvrLobby (opts) {
 
             bubble.addEventListener('click',self.handleInteraction.bind(self));
             bubble.addEventListener('hit', self.handleInteraction.bind(self));
+            bubble.addEventListener('raycaster-intersected', function (e) {
+              var target = e.detail.target;
+              target.setAttribute('mixin', self.bubbleMixin + ' hovered');
+              self.hovered = target;
+            });
+            bubble.addEventListener('raycaster-intersected-cleared', function (e) {
+              e.detail.target.setAttribute('mixin', self.bubbleMixin);
+              self.hovered = null;
+            });
 
             // bubble.addEventListener('mouseenter', function (e) {
             //   var el = e.detail.target;
@@ -286,9 +293,19 @@ function webvrLobby (opts) {
 
     setupControllers: function () {
       var self = this;
-      // add collider to controllers
-      self.controllers.forEach(function (controller) {
+      // touch and vive controllers
+      controllers = Array.prototype.slice.call(document.querySelectorAll('a-entity[hand-controls]'));
+      controllers.forEach(function (controller) {
         controller.setAttribute('aabb-collider', { objects: '.' + self.bubbleMixin});
+      });
+
+      // daydream controller
+      var remote = document.querySelector('a-entity[daydream-controller]');
+      remote.setAttribute('raycaster', { objects: '.' + self.bubbleMixin});
+      remote.addEventListener('buttonup', function (e) {
+        if (self.hovered) {
+          //
+        }
       });
       return;
     },

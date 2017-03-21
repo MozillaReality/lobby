@@ -19,6 +19,7 @@
     <a-scene fog="type: linear; color: #CDAAC9; far: 150; near: 0">
       <a-assets>
         <a-mixin id="bubble" geometry="primitive: sphere; radius: 0.1" material="color: lightblue; opacity: 0.2; metalness: 0.7; roughness: 0.5"></a-mixin>
+        <a-mixin id="hovered" material="color: lightblue; opacity: 0.6; metalness: 0.2; roughness: 0.5"></a-mixin>
         <a-mixin id="jewel" geometry="primitive: octahedron; radius: 0.05"></a-mixin>
         <a-mixin id="platform" geometry="primitive: cylinder; radius: 0.08; height: 0.01;" material="color: #182E29" position="0 0 0"></a-mixin>
         <a-mixin id="hovered" material="color: darkblue"></a-mixin>
@@ -66,7 +67,9 @@
       <a-entity hand-controls="left"></a-entity>
       <a-entity hand-controls="right"></a-entity>
 
-      <a-entity daydream-controller></a-entity>
+      <a-entity daydream-controller>
+         <a-cone id="ray" color="cyan" position="0 0 -2" rotation="-90 0 0" radius-bottom="0.005" radius-top="0.001" height="4"></a-cone>
+      </a-entity>
 
       <!-- site title text -->
       <a-entity title position="0 1.5 -0.7" visible="false">
