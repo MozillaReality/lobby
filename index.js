@@ -10,14 +10,15 @@ function webvrLobby (opts) {
 
   var THREE = module.exports.THREE = opts.THREE || AFRAME.THREE;
 
-  module.exports['aframe-look-at-component'] = opts['aframe-look-at-component'] || require('aframe-look-at-component');
   module.exports['aframe-gradient-sky'] = opts['aframe-gradient-sky'] || require('aframe-gradient-sky');
+  module.exports['aframe-dev-components'] = opts['aframe-dev-components'] || require('aframe-dev-components');
 
   module.exports.motion = require('./components/motion');
   module.exports.transition = require('./components/transition');
   module.exports.title = require('./components/title');
   module.exports.clouds = require('./components/clouds');
   module.exports.aabb = require('./components/aabb-collider');
+  module.exports.lookat = require('./components/look-at');
 
   var getSites = module.exports.sites = opts.sites || require('./sites');
 
@@ -164,13 +165,16 @@ function webvrLobby (opts) {
 
             // bubble icons
             var bubble = document.createElement('a-entity');
+            if (settings.env === 'dev') {
+              bubble.setAttribute('bb', '');
+            }
             bubble.setAttribute('mixin', self.bubbleMixin);
             bubble.setAttribute('position', { x: x, y: 0, z: z });
             bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
             bubble.setAttribute('data-url', site.start_url);
             bubble.setAttribute('data-name', site.name);
             bubble.setAttribute('bob-y', { offset: 400 * idx });
-            bubble.className = 'bubble';
+            bubble.className = self.bubbleMixin;
 
             // favicon
             var favicon = site.processed_gltf_icon;
@@ -236,6 +240,7 @@ function webvrLobby (opts) {
       var target = e.detail.target;
       var url = target.dataset.url;
       var name = target.dataset.name;
+      console.log('interacting', target);
       if (url === undefined) { return; }
       if (!self.transitioning) {
         self.transitioning = true;
@@ -272,10 +277,21 @@ function webvrLobby (opts) {
     },
 
     play: function () {
-      this.ready.then(this.showMenu.bind(this));
+      this.ready
+        .then(this.showMenu.bind(this))
+        .then(this.addCollider.bind(this));
     },
 
     pause: function () {
+    },
+
+    addCollider: function () {
+      var self = this;
+      // add collider to controllers
+      self.controllers.forEach(function (controller) {
+        controller.setAttribute('aabb-collider', { objects: '.' + self.bubbleMixin});
+      });
+      return;
     },
 
     selectMenu: function (target) {
@@ -315,24 +331,33 @@ function webvrLobby (opts) {
     },
 
     showMenu: function () {
-      this.bubbles.forEach(function (bubble, i) {
-        var position = bubble.getAttribute('position');
-        var startY = position.y + 0.25;
-        bubble.setAttribute('position', { y: startY });
-        bubble.setAttribute('scale', { x: 0, y: 0, z: 0 });
-        new TWEEN.Tween({ y: startY, scale: 0 })
-          .to({ y: position.y, scale: 1 }, 1000)
-          .delay(150 * i)
-          .easing(TWEEN.Easing.Back.InOut)
-          .onUpdate(function () {
-            bubble.setAttribute('position', {
-              y: this.y
-            });
-            bubble.setAttribute('scale', {
-              x: this.scale, y: this.scale, z: this.scale
-            });
-          })
-          .start();
+      var count = this.bubbles.length;
+      var bubbles = this.bubbles;
+      return new Promise(function (resolve, reject) {
+        bubbles.forEach(function (bubble, i) {
+          var position = bubble.getAttribute('position');
+          var startY = position.y + 0.25;
+          bubble.setAttribute('position', { y: startY });
+          bubble.setAttribute('scale', { x: 0, y: 0, z: 0 });
+          new TWEEN.Tween({ y: startY, scale: 0 })
+            .to({ y: position.y, scale: 1 }, 1000)
+            .delay(150 * i)
+            .easing(TWEEN.Easing.Back.InOut)
+            .onUpdate(function () {
+              bubble.setAttribute('position', {
+                y: this.y
+              });
+              bubble.setAttribute('scale', {
+                x: this.scale, y: this.scale, z: this.scale
+              });
+            })
+            .onComplete(function () {
+              if (--count === 0) {
+                resolve();
+              }
+            })
+            .start();
+        });
       });
     },
 
