@@ -278,13 +278,13 @@ function webvrLobby (opts) {
     play: function () {
       this.ready
         .then(this.showMenu.bind(this))
-        .then(this.addCollider.bind(this));
+        .then(this.setupControllers.bind(this));
     },
 
     pause: function () {
     },
 
-    addCollider: function () {
+    setupControllers: function () {
       var self = this;
       // add collider to controllers
       self.controllers.forEach(function (controller) {
@@ -362,19 +362,6 @@ function webvrLobby (opts) {
 
     tick: function (time) {
       TWEEN.update(time);
-      var self = this;
-      this.controllers.forEach(function (controller) {
-        var controllerBB = new THREE.Box3().setFromObject(controller.object3D);
-
-        self.bubbles.forEach(function (bubble) {
-          var meshBB = new THREE.Box3().setFromObject(bubble.getObject3D('mesh'));
-          var collision = meshBB.intersectsBox(controllerBB);
-
-          if (collision) {
-            //console.log('collision');
-          }
-        });
-      });
     }
   });
 }
