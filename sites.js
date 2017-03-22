@@ -6,7 +6,7 @@ var ORIGIN_NO_PORT = window.location.protocol + '//' + window.location.hostname;
   var webvrAgentScriptSrcLocal = ORIGIN_NO_PORT + ':4040/client.js';
   var webvrAgentScriptSrcProd = 'https://frqmsivdin.localtunnel.me/client.js';  // https://agent.webvr.rocks/client.js
   var webvrAgentScriptSrc = IS_DEV ? webvrAgentScriptSrcLocal : webvrAgentScriptSrcProd;
-  
+
   if (IS_DEV) {
     var req = new Image();
     req.addEventListener('load', function () {
@@ -43,7 +43,8 @@ var ORIGIN_NO_PORT = window.location.protocol + '//' + window.location.hostname;
 var sites = [
   {
     name: 'Shadows and Fog',
-    start_url: 'https://aframe.io/aframe/examples/showcase/spheres-and-fog/'
+    // start_url: 'https://aframe.io/aframe/examples/showcase/spheres-and-fog/'
+    start_url: 'fog.html'
   },
   {
     name: 'Puzzle Rain',
