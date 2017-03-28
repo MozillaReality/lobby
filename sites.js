@@ -4,7 +4,7 @@ var ORIGIN_NO_PORT = window.location.protocol + '//' + window.location.hostname;
 (function (win, doc) {
   var webvrAgentScript = doc.querySelector('script[src*="agent"][src*="/client.js"]');
   var webvrAgentScriptSrcLocal = ORIGIN_NO_PORT + ':4040/client.js';
-  var webvrAgentScriptSrcProd = 'https://frqmsivdin.localtunnel.me/client.js';  // https://agent.webvr.rocks/client.js
+  var webvrAgentScriptSrcProd = 'https://agent.webvr.rocks/client.js';
   var webvrAgentScriptSrc = IS_DEV ? webvrAgentScriptSrcLocal : webvrAgentScriptSrcProd;
 
   if (IS_DEV) {
