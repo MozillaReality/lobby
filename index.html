@@ -25,6 +25,8 @@
         <a-mixin id="hovered" material="color: darkblue"></a-mixin>
         <a-mixin id="cloud" geometry="primitive: plane; width: 1, height: 1" material="color: #F5DCFF; opacity: 0.4; side: front" rotation="90 0 0"></a-mixin>
         <a-mixin id="label" position="0 -0.25 0" text="font: exo2bold"></a-mixin>
+        <a-mixin id="option-menu" text="width: 1; align: center; font: exo2bold" geometry="primitive: box; width: 0.25; height: 0.06; depth: 0.05;" material="visible: false;"></a-mixin>
+        <a-mixin id="option-select" geometry="primitive: box; width: 0.25; height: 0.06; depth: 0.01;" position="0 0 -0.01" material="color: #091444;"></a-mixin>
       </a-assets>
       <a-gradient-sky material="shader: gradient; topColor: 213, 157, 213; bottomColor: 109, 146, 188;"></a-gradient-sky>
 
@@ -48,6 +50,12 @@
           <a-entity id="steam-name" position="0 -0.3 0" text="width: 3; align: center; font: exo2bold"></a-entity>
         </a-entity>
 
+        <!-- menu selection -->
+        <a-entity id="selection" position="0 -0.3 -0.3" rotation="-25 0 0">
+          <a-entity id="select" mixin="option-select"></a-entity>
+          <a-entity id="showcase" class="selectable" data-filter="showcase" mixin="option-menu" text="value: Showcase;" position="-0.12 0 0"></a-entity>
+          <a-entity id="recent" class="selectable" data-filter="recent" mixin="option-menu" text="value: Recent;" position="0.12 0 0"></a-entity>
+        </a-entity>
 
         <!-- friends -->
         <a-entity id="friends" visible="false" position="0 -0.6 -1">
@@ -80,7 +88,7 @@
       <a-entity camera="userHeight: 1.6" look-controls wasd-controls>
         <a-entity transition></a-entity>
         <a-entity cursor
-          raycaster="far: 20; interval: 1000; objects: .bubble"
+          raycaster="far: 20; interval: 1000; objects: .selectable"
           position="0 0 -0.5"
           geometry="primitive: ring; radiusInner: 0.005; radiusOuter: 0.01"
           material="color: #9167A1; shader: flat">

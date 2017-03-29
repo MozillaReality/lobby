@@ -5,7 +5,7 @@ AFRAME.registerComponent('menu', {
     this.getSites = module.exports.sites = require('../sites');
 
     this.bubbleHover = 'hovered';
-    this.bubbleClass = 'bubble';
+    this.bubbleClass = 'selectable';
 
     this.loaded = 0;
     this.bubbles = [];
@@ -13,6 +13,7 @@ AFRAME.registerComponent('menu', {
   },
 
   play: function () {
+    this.setupOptions();
     this.loadSites()
       .then(this.showMenu.bind(this))
       .then(this.setupControllers.bind(this));
@@ -21,11 +22,23 @@ AFRAME.registerComponent('menu', {
   pause: function () {
   },
 
+  setupOptions: function () {
+    var self = this;
+    var options = [
+      document.querySelector('#showcase'),
+      document.querySelector('#recent')
+    ];
+
+    options.forEach(function (option, i) {
+      option.addEventListener('click', self.handleOptionSelect.bind(self));
+      option.addEventListener('hit', self.handleOptionSelect.bind(self));
+    });
+  },
+
   loadSites: function () {
     var self = this;
     return new Promise(function (resolve, reject) {
       self.getSites().then(function (sites) {
-        console.log(sites);
         var radius = self.radius = 0.65; // radius of menu around user.
         var startAngle = -Math.PI / sites.length;
         var angle = startAngle / 2;
@@ -52,8 +65,8 @@ AFRAME.registerComponent('menu', {
               resolve();
             }
           });
-          bubble.addEventListener('click',self.handleInteraction.bind(self));
-          bubble.addEventListener('hit', self.handleInteraction.bind(self));
+          bubble.addEventListener('click',self.handleItemSelect.bind(self));
+          bubble.addEventListener('hit', self.handleItemSelect.bind(self));
           bubble.addEventListener('raycaster-intersected', function (e) {
             self.hovered = e.detail.target;
           });
@@ -68,7 +81,15 @@ AFRAME.registerComponent('menu', {
     })
   },
 
-  handleInteraction: function (e) {
+  handleOptionSelect: function (e) {
+    var target = e.detail.target;
+    var select = document.querySelector('#select');
+    var selectPosition = select.getAttribute('position');
+    var targetPosition = target.getAttribute('position');
+    select.setAttribute('position', { x: targetPosition.x, y: selectPosition.y, z: selectPosition.z });
+  },
+
+  handleItemSelect: function (e) {
     var self = this;
     var target = e.detail.target;
     var link = target.getAttribute('link');
