@@ -163,15 +163,8 @@ function webvrLobby (opts) {
               'favicon': site.processed_gltf_icon
             });
 
-            if (settings.env === 'dev') {
-              bubble.setAttribute('bb', '');
-            }
-            // bubble.setAttribute('mixin', self.bubbleMixin);
             bubble.setAttribute('position', { x: x, y: 0, z: z });
             bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
-            // bubble.setAttribute('data-url', site.start_url);
-            // bubble.setAttribute('data-name', site.name);
-            // bubble.setAttribute('bob-y', { offset: 400 * idx });
             bubble.className = self.bubbleMixin;
 
             bubble.addEventListener('loaded', function () {
@@ -183,15 +176,12 @@ function webvrLobby (opts) {
 
             bubble.addEventListener('click',self.handleInteraction.bind(self));
             bubble.addEventListener('hit', self.handleInteraction.bind(self));
-            // bubble.addEventListener('raycaster-intersected', function (e) {
-            //   var target = e.detail.target;
-            //   target.setAttribute('mixin', self.bubbleMixin + ' hovered');
-            //   self.hovered = target;
-            // });
-            // bubble.addEventListener('raycaster-intersected-cleared', function (e) {
-            //   e.detail.target.setAttribute('mixin', self.bubbleMixin);
-            //   self.hovered = null;
-            // });
+            bubble.addEventListener('raycaster-intersected', function (e) {
+              self.hovered = e.detail.target;
+            });
+            bubble.addEventListener('raycaster-intersected-cleared', function (e) {
+              self.hovered = null;
+            });
 
 
             self.bubbles.push(bubble);

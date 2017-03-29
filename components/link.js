@@ -46,7 +46,7 @@ AFRAME.registerComponent('link', {
     this.el.setAttribute('material', {
       visible: false
     })
-    this.el.setAttribute('bb', '');
+
     this.el.appendChild(favEl);
 
     // bubble platform
