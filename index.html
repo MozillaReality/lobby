@@ -18,7 +18,7 @@
   <body>
     <a-scene fog="type: linear; color: #CDAAC9; far: 150; near: 0">
       <a-assets>
-        <a-mixin id="bubble" geometry="primitive: sphere; radius: 0.1" material="color: lightblue; opacity: 0.2; metalness: 0.7; roughness: 0.5"></a-mixin>
+        <a-mixin id="surround" geometry="primitive: sphere; radius: 0.1; phiStart: 0; phiLength: -180" material="color: #317b96; opacity: 0.2; front: front; metalness: 0.6; roughness: 0.8"></a-mixin>
         <a-mixin id="hovered" material="color: lightblue; opacity: 0.6; metalness: 0.2; roughness: 0.5"></a-mixin>
         <a-mixin id="jewel" geometry="primitive: octahedron; radius: 0.05"></a-mixin>
         <a-mixin id="platform" geometry="primitive: cylinder; radius: 0.08; height: 0.01;" material="color: #182E29" position="0 0 0"></a-mixin>

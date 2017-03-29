@@ -49,6 +49,12 @@ AFRAME.registerComponent('link', {
 
     this.el.appendChild(favEl);
 
+    // surround
+    var surround = document.createElement('a-entity');
+    surround.setAttribute('mixin', 'surround');
+    surround.className = 'surround';
+    this.el.appendChild(surround);
+
     // bubble platform
     var platform = document.createElement('a-entity');
     platform.setAttribute('mixin', 'platform');

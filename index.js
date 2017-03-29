@@ -138,7 +138,7 @@ function webvrLobby (opts) {
     init: function () {
       var self = this;
       this.bubbleHover = 'hovered';
-      this.bubbleMixin = 'bubble';
+      this.bubbleClass = 'bubble';
 
       this.loaded = 0;
       this.bubbles = [];
@@ -165,7 +165,7 @@ function webvrLobby (opts) {
 
             bubble.setAttribute('position', { x: x, y: 0, z: z });
             bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
-            bubble.className = self.bubbleMixin;
+            bubble.className = self.bubbleClass;
 
             bubble.addEventListener('loaded', function () {
               self.loaded++;
@@ -195,7 +195,6 @@ function webvrLobby (opts) {
       var self = this;
       var target = e.detail.target;
       var link = target.getAttribute('link');
-      var name = target.dataset.name;
       if (link.url === undefined) { return; }
       if (!self.transitioning) {
         self.transitioning = true;
@@ -245,12 +244,12 @@ function webvrLobby (opts) {
       // touch and vive controllers
       controllers = Array.prototype.slice.call(document.querySelectorAll('a-entity[hand-controls]'));
       controllers.forEach(function (controller) {
-        controller.setAttribute('aabb-collider', { objects: '.' + self.bubbleMixin});
+        controller.setAttribute('aabb-collider', { objects: '.' + self.bubbleClass});
       });
 
       // daydream controller
       var remote = document.querySelector('a-entity[daydream-controller]');
-      remote.setAttribute('raycaster', { objects: '.' + self.bubbleMixin});
+      remote.setAttribute('raycaster', { objects: '.' + self.bubbleClass});
       remote.addEventListener('buttonup', function (e) {
         if (self.hovered) {
           //
