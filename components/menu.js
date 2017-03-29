@@ -2,7 +2,7 @@ AFRAME.registerComponent('menu', {
   init: function () {
     var self = this;
 
-    var getSites = module.exports.sites = require('../sites');
+    this.getSites = module.exports.sites = require('../sites');
 
     this.bubbleHover = 'hovered';
     this.bubbleClass = 'bubble';
@@ -10,9 +10,22 @@ AFRAME.registerComponent('menu', {
     this.loaded = 0;
     this.bubbles = [];
     this.transitioning = false;
+  },
 
-    this.ready = new Promise(function (resolve, reject) {
-      getSites().then(function (sites) {
+  play: function () {
+    this.loadSites()
+      .then(this.showMenu.bind(this))
+      .then(this.setupControllers.bind(this));
+  },
+
+  pause: function () {
+  },
+
+  loadSites: function () {
+    var self = this;
+    return new Promise(function (resolve, reject) {
+      self.getSites().then(function (sites) {
+        console.log(sites);
         var radius = self.radius = 0.65; // radius of menu around user.
         var startAngle = -Math.PI / sites.length;
         var angle = startAngle / 2;
@@ -29,7 +42,6 @@ AFRAME.registerComponent('menu', {
             'name': site.name,
             'favicon': site.processed_gltf_icon
           });
-
           bubble.setAttribute('position', { x: x, y: 0, z: z });
           bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
           bubble.className = self.bubbleClass;
@@ -40,7 +52,6 @@ AFRAME.registerComponent('menu', {
               resolve();
             }
           });
-
           bubble.addEventListener('click',self.handleInteraction.bind(self));
           bubble.addEventListener('hit', self.handleInteraction.bind(self));
           bubble.addEventListener('raycaster-intersected', function (e) {
@@ -50,12 +61,11 @@ AFRAME.registerComponent('menu', {
             self.hovered = null;
           });
 
-
           self.bubbles.push(bubble);
           self.el.appendChild(bubble);
         });
       });
-    });
+    })
   },
 
   handleInteraction: function (e) {
@@ -95,15 +105,6 @@ AFRAME.registerComponent('menu', {
         console.log('Navigating to ', url);
         window.location.href = url;
       });
-  },
-
-  play: function () {
-    this.ready
-      .then(this.showMenu.bind(this))
-      .then(this.setupControllers.bind(this));
-  },
-
-  pause: function () {
   },
 
   setupControllers: function () {
