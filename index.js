@@ -14,6 +14,7 @@ function webvrLobby (opts) {
   module.exports['aframe-dev-components'] = opts['aframe-dev-components'] || require('aframe-dev-components');
   module.exports['aframe-daydream-controller-component'] = opts['aframe-daydream-controller-component'] || require('aframe-daydream-controller-component');
 
+  module.exports.link = require('./components/link');
   module.exports.motion = require('./components/motion');
   module.exports.transition = require('./components/transition');
   module.exports.title = require('./components/title');
@@ -138,13 +139,6 @@ function webvrLobby (opts) {
       var self = this;
       this.bubbleHover = 'hovered';
       this.bubbleMixin = 'bubble';
-      this.colors = [
-        0x6C77E8,
-        0xE8A238,
-        0xF83C98,
-        0xD5E86E,
-        0x24DFBF
-      ];
 
       this.loaded = 0;
       this.bubbles = [];
@@ -161,50 +155,24 @@ function webvrLobby (opts) {
             var z = radius * Math.sin(angle);
             angle += startAngle;
 
-            // bubble icons
+            // site links
             var bubble = document.createElement('a-entity');
+            bubble.setAttribute('link', {
+              'url': site.start_url,
+              'name': site.name,
+              'favicon': site.processed_gltf_icon
+            });
+
             if (settings.env === 'dev') {
               bubble.setAttribute('bb', '');
             }
-            bubble.setAttribute('mixin', self.bubbleMixin);
+            // bubble.setAttribute('mixin', self.bubbleMixin);
             bubble.setAttribute('position', { x: x, y: 0, z: z });
             bubble.setAttribute('look-at', { x: 0, y: 0, z: 0 });
-            bubble.setAttribute('data-url', site.start_url);
-            bubble.setAttribute('data-name', site.name);
-            bubble.setAttribute('bob-y', { offset: 400 * idx });
+            // bubble.setAttribute('data-url', site.start_url);
+            // bubble.setAttribute('data-name', site.name);
+            // bubble.setAttribute('bob-y', { offset: 400 * idx });
             bubble.className = self.bubbleMixin;
-
-            // favicon
-            var favicon = site.processed_gltf_icon;
-            var favEl;
-            if (favicon) {
-              favEl = document.createElement('a-gltf-model');
-              favEl.setAttribute('src', favicon);
-            } else {
-              favEl = document.createElement('a-entity');
-              favEl.setAttribute('mixin', 'jewel');
-              favEl.setAttribute('material', { color: self.colors[idx]});
-            }
-            favEl.setAttribute('rotate-y-axis', '');
-            bubble.appendChild(favEl);
-
-            // bubble platform
-            var platform = document.createElement('a-entity');
-            platform.setAttribute('mixin', 'platform');
-            platform.setAttribute('position', { y: -0.16 });
-            platform.className = 'platform';
-            // platform.setAttribute('position', { x: x, y: -0.16, z: z });
-            bubble.appendChild(platform);
-
-            // bubble text label
-            var text = document.createElement('a-entity');
-            text.setAttribute('mixin', 'label');
-            text.className = 'title';
-            text.setAttribute('text', {
-              value: site.name,
-              align: 'center'
-            });
-            bubble.appendChild(text);
 
             bubble.addEventListener('loaded', function () {
               self.loaded++;
@@ -215,25 +183,16 @@ function webvrLobby (opts) {
 
             bubble.addEventListener('click',self.handleInteraction.bind(self));
             bubble.addEventListener('hit', self.handleInteraction.bind(self));
-            bubble.addEventListener('raycaster-intersected', function (e) {
-              var target = e.detail.target;
-              target.setAttribute('mixin', self.bubbleMixin + ' hovered');
-              self.hovered = target;
-            });
-            bubble.addEventListener('raycaster-intersected-cleared', function (e) {
-              e.detail.target.setAttribute('mixin', self.bubbleMixin);
-              self.hovered = null;
-            });
-
-            // bubble.addEventListener('mouseenter', function (e) {
-            //   var el = e.detail.target;
-            //   el.setAttribute('mixin', self.bubbleMixin + ' ' + self.bubbleHover);
+            // bubble.addEventListener('raycaster-intersected', function (e) {
+            //   var target = e.detail.target;
+            //   target.setAttribute('mixin', self.bubbleMixin + ' hovered');
+            //   self.hovered = target;
+            // });
+            // bubble.addEventListener('raycaster-intersected-cleared', function (e) {
+            //   e.detail.target.setAttribute('mixin', self.bubbleMixin);
+            //   self.hovered = null;
             // });
 
-            // bubble.addEventListener('mouseleave', function (e) {
-            //   var el = e.detail.target;
-            //   el.setAttribute('mixin', self.bubbleMixin);
-            // });
 
             self.bubbles.push(bubble);
             self.el.appendChild(bubble);
@@ -245,9 +204,9 @@ function webvrLobby (opts) {
     handleInteraction: function (e) {
       var self = this;
       var target = e.detail.target;
-      var url = target.dataset.url;
+      var link = target.getAttribute('link');
       var name = target.dataset.name;
-      if (url === undefined) { return; }
+      if (link.url === undefined) { return; }
       if (!self.transitioning) {
         self.transitioning = true;
         var welcomeEl = document.querySelector('#welcome');
@@ -256,13 +215,13 @@ function webvrLobby (opts) {
         }
         var titleEl = document.querySelector('#site-title');
         if (titleEl) {
-          titleEl.setAttribute('text', { value: name });
+          titleEl.setAttribute('text', { value: link.name });
         }
         var urlEl = document.querySelector('#site-url');
         if (urlEl) {
-          urlEl.setAttribute('text', { value: url });
+          urlEl.setAttribute('text', { value: link.url });
         }
-        self.navigate(name, url, target);
+        self.navigate(link.name, link.url, target);
       }
     },
 
