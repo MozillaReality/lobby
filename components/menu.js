@@ -28,13 +28,21 @@ AFRAME.registerComponent('menu', {
   },
 
   loadMenu: function () {
+    var self = this;
+    if (self.transitioning) {
+      return;
+    } else {
+      self.transitioning = true;
+    }
     if (this.el.children.length > 0) {
       this.resetMenu();
-    };
-
+    }
     this.loadSites()
       .then(this.showMenu.bind(this))
-      .then(this.setupControllers.bind(this));
+      .then(this.setupControllers.bind(this))
+      .then(function () {
+        self.transitioning = false;
+      });
   },
 
   setupOptions: function () {
@@ -55,6 +63,10 @@ AFRAME.registerComponent('menu', {
 
   handleOptionSelect: function (e) {
     var target = e.detail.target;
+    if (this.optionTarget === target) {
+      return;
+    }
+    this.optionTarget = target;
     this.optionSelect(target);
   },
 
