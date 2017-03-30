@@ -14,12 +14,27 @@ AFRAME.registerComponent('menu', {
 
   play: function () {
     this.setupOptions();
-    this.loadSites()
-      .then(this.showMenu.bind(this))
-      .then(this.setupControllers.bind(this));
   },
 
   pause: function () {
+  },
+
+  resetMenu: function () {
+    this.bubbles = [];
+    this.loaded = 0;
+    while (this.el.hasChildNodes()) {
+      this.el.removeChild(this.el.lastChild);
+    };
+  },
+
+  loadMenu: function () {
+    if (this.el.children.length > 0) {
+      this.resetMenu();
+    };
+
+    this.loadSites()
+      .then(this.showMenu.bind(this))
+      .then(this.setupControllers.bind(this));
   },
 
   setupOptions: function () {
@@ -30,15 +45,45 @@ AFRAME.registerComponent('menu', {
     ];
 
     options.forEach(function (option, i) {
+      if (i === 0) {
+        self.optionSelect(option);
+      }
       option.addEventListener('click', self.handleOptionSelect.bind(self));
       option.addEventListener('hit', self.handleOptionSelect.bind(self));
     });
+  },
+
+  handleOptionSelect: function (e) {
+    var target = e.detail.target;
+    this.optionSelect(target);
+  },
+
+  optionSelect: function (target) {
+    var select = document.querySelector('#select');
+    var selectPosition = select.getAttribute('position');
+    var targetPosition = target.getAttribute('position');
+    this.filter = target.dataset.filter;
+    select.setAttribute('position', { x: targetPosition.x, y: selectPosition.y, z: selectPosition.z });
+
+    this.loadMenu();
+  },
+
+  filterSites: function (sites) {
+    var self = this;
+    if (this.filter) {
+      return sites.filter(function (site) {
+        return site[self.filter] === true;
+      });
+    } else {
+      return sites;
+    }
   },
 
   loadSites: function () {
     var self = this;
     return new Promise(function (resolve, reject) {
       self.getSites().then(function (sites) {
+        sites = self.filterSites(sites);
         var radius = self.radius = 0.65; // radius of menu around user.
         var startAngle = -Math.PI / sites.length;
         var angle = startAngle / 2;
@@ -81,14 +126,6 @@ AFRAME.registerComponent('menu', {
     })
   },
 
-  handleOptionSelect: function (e) {
-    var target = e.detail.target;
-    var select = document.querySelector('#select');
-    var selectPosition = select.getAttribute('position');
-    var targetPosition = target.getAttribute('position');
-    select.setAttribute('position', { x: targetPosition.x, y: selectPosition.y, z: selectPosition.z });
-  },
-
   handleItemSelect: function (e) {
     var self = this;
     var target = e.detail.target;
@@ -96,10 +133,14 @@ AFRAME.registerComponent('menu', {
     if (link.url === undefined) { return; }
     if (!self.transitioning) {
       self.transitioning = true;
-      var welcomeEl = document.querySelector('#welcome');
-      if (welcomeEl) {
-        welcomeEl.setAttribute('visible', false);
-      }
+
+      ['#selection', '#welcome'].forEach(function (select) {
+        var el = document.querySelector(select);
+        if (el) {
+          el.setAttribute('visible', false);
+        }
+      });
+
       var titleEl = document.querySelector('#site-title');
       if (titleEl) {
         titleEl.setAttribute('text', { value: link.name });

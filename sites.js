@@ -44,29 +44,35 @@ var sites = [
   {
     name: 'Shadows and Fog',
     // start_url: 'https://aframe.io/aframe/examples/showcase/spheres-and-fog/'
-    start_url: 'fog.html'
+    start_url: 'fog.html',
+    is_showcase: true
   },
   {
     name: 'Puzzle Rain',
     start_url: 'https://mozvr.com/puzzle-rain/?mode=normal&src=moonrise',
     // processed_gltf_icon: 'https://mozvr.com/puzzle-rain/models/gltf/puzzle-rain.gltf'
-    processed_gltf_icon: 'models/puzzle-rain/puzzle-rain.gltf'
+    processed_gltf_icon: 'models/puzzle-rain/puzzle-rain.gltf',
+    is_showcase: true
   },
   {
     name: 'A-Painter',
-    start_url: 'https://aframe.io/a-painter/'
+    start_url: 'https://aframe.io/a-painter/',
+    is_showcase: true
   },
   {
     name: 'A-Blast',
-    start_url: 'https://aframe.io/a-blast/'
+    start_url: 'https://aframe.io/a-blast/',
+    is_recent: true
   },
   {
     name: 'Sketchfab',
-    start_url: 'https://sketchfab.com/vr'
+    start_url: 'https://sketchfab.com/vr',
+    is_recent: true
   },
   {
     name: 'Finding Love',
-    start_url: 'https://findinglove.activetheory.net/'
+    start_url: 'https://findinglove.activetheory.net/',
+    is_recent: true
   }
 ];
 
