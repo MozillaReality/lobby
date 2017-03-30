@@ -10,6 +10,8 @@ AFRAME.registerComponent('menu', {
     this.loaded = 0;
     this.bubbles = [];
     this.transitioning = false;
+
+    this.handControllers = Array.prototype.slice.call(document.querySelectorAll('a-entity[hand-controls]'));
   },
 
   play: function () {
@@ -42,6 +44,13 @@ AFRAME.registerComponent('menu', {
       .then(this.setupControllers.bind(this))
       .then(function () {
         self.transitioning = false;
+        self.handControllers.forEach(function (controller) {
+          // force update on collider with new sites.
+          controller.removeAttribute('aabb-collider');
+          controller.setAttribute('aabb-collider', {
+            objects: '.' + self.bubbleClass
+          })
+        })
       });
   },
 
