@@ -1,6 +1,6 @@
 # WebVR Lobby
 
-Welcome to the **[WebVR Lobby](https://caseyyee.github.io/webvr-lobby/)**!
+Welcome to the **[WebVR Lobby](https://lobby.webvr.rocks/)**!
 
 ![WebVR Lobby](https://raw.githubusercontent.com/caseyyee/webvr-lobby/master/img/preview.png)
 
@@ -14,7 +14,7 @@ cd webvr-lobby && npm install  # Install dependencies.
 npm start  # Start the local development server.
 ```
 
-And open this URL in your browser: **[`http://localhost:8000/`](http://localhost:8000/)**
+And, then open this URL in your browser: **[`http://localhost:8000/`](http://localhost:8000/)**
 
 ### Using with WebVR-Agent
 
@@ -24,7 +24,7 @@ Full instructions can be found in the **[WebVR Agent](https://github.com/WebVRRo
 
 ## Deployment
 
-To deploy the static pages to [production](https://caseyyee.github.io/webvr-lobby/):
+To deploy the static pages to [production](https://lobby.webvr.rocks/):
 
 ```sh
 npm run deploy
