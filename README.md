@@ -2,6 +2,7 @@
 
 Welcome to the **[WebVR Lobby](https://caseyyee.github.io/webvr-lobby/)**!
 
+![WebVR Lobby](https://raw.githubusercontent.com/caseyyee/webvr-lobby/master/img/preview.png)
 
 ## Local development
 
