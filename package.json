@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "description": "WebVR Lobby",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/webvrrocks/webvr-lobby.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webvrrocks/webvr-lobby/issues"
+  },
+  "homepage": "https://lobby.webvr.rocks",
   "scripts": {
     "start": "npm run dev",
     "dev": "budo index.js:build.js --port 8000 --live --open",
@@ -12,9 +20,11 @@
     "build": "shx mkdir -p _prod && shx cp -R {index.html,*.js,favicon.ico,*.md,*.webmanifest,img,models} _prod/. && shx mkdir -p _prod && browserify index.js -o _prod/build.js",
     "predeploy": "npm run build",
     "deploy": "ghpages -p _prod",
+    "postdeploy": "npm run open",
     "deploy:cvan": "GHPAGES_REPO=\"cvan/webvr-lobby\" npm run deploy",
     "deploy:caseyyee": "GHPAGES_REPO=\"caseyyee/webvr-lobby\" npm run deploy",
     "deploy:casey": "npm run deploy:caseyyee",
+    "open": "opn 'https://lobby.webvr.rocks/'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Casey Yee",
@@ -24,6 +34,7 @@
     "aframe-dev-components": "git://github.com/caseyyee/aframe-dev-components.git",
     "budo": "^9.4.5",
     "ghpages": "^0.0.10",
+    "opn": "^4.0.2",
     "shx": "^0.2.2"
   },
   "dependencies": {
