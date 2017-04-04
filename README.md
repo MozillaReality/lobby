@@ -1,6 +1,6 @@
 # Habitat
 
-Habitat is a WebVR Home Place for **[Project Moonrise](https://github.com/webvrrocks/moonrise)** and **[WebVR Agent](https://github.com/WebVRRocks/webvr-agent)
+Habitat is a WebVR Home Place for **[Project Moonrise](https://github.com/webvrrocks/moonrise)** and **[WebVR Agent](https://github.com/WebVRRocks/webvr-agent)**
 
 Welcome to the **[Habitat](https://lobby.webvr.rocks/)**!
 
