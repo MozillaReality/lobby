@@ -1,8 +1,10 @@
-# WebVR Lobby
+# Habitat
 
-Welcome to the **[WebVR Lobby](https://lobby.webvr.rocks/)**!
+Habitat is a WebVR Home Place for **[Project Moonrise](https://github.com/webvrrocks/moonrise)** and **[WebVR Agent](https://github.com/WebVRRocks/webvr-agent)
 
-[![WebVR Lobby](https://raw.githubusercontent.com/webvrrocks/webvr-lobby/master/img/preview.png "WebVR Lobby")](https://lobby.webvr.rocks/)
+Welcome to the **[Habitat](https://lobby.webvr.rocks/)**!
+
+[![Habitat](https://raw.githubusercontent.com/webvrrocks/webvr-lobby/master/img/preview.png "WebVR Lobby")](https://lobby.webvr.rocks/)
 
 ## Local development
 
