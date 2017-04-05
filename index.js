@@ -3,6 +3,8 @@
 
 var settings = require('./settings');
 
+require('./load-agent.js');
+
 function webvrLobby (opts) {
   opts = opts || {};
   var AFRAME = module.exports.AFRAME = opts.AFRAME || require('aframe');

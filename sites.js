@@ -1,45 +1,6 @@
 var IS_DEV = window.location.port && (window.location.hostname.split('.').length === 4 || window.location.hostname === 'localhost');
 var ORIGIN_NO_PORT = window.location.protocol + '//' + window.location.hostname;
 
-(function (win, doc) {
-  var webvrAgentScript = doc.querySelector('script[src*="agent"][src*="/client.js"]');
-  var webvrAgentScriptSrcLocal = ORIGIN_NO_PORT + ':4040/client.js';
-  var webvrAgentScriptSrcProd = 'https://agent.webvr.rocks/client.js';
-  var webvrAgentScriptSrc = IS_DEV ? webvrAgentScriptSrcLocal : webvrAgentScriptSrcProd;
-
-  if (IS_DEV) {
-    var req = new Image();
-    req.addEventListener('load', function () {
-      if (webvrAgentScript) {
-        if (IS_DEV) {
-          webvrAgentScript.abort = true;
-          webvrAgentScript.src = webvrAgentScript.src.replace(/(.+)client.js/, ORIGIN_NO_PORT + ':4040/client.js');
-        }
-      } else {
-        webvrAgentScript = doc.createElement('script');
-        webvrAgentScript.src = webvrAgentScriptSrc;
-        webvrAgentScript.async = webvrAgentScript.defer = true;
-        doc.head.appendChild(webvrAgentScript);
-      }
-    });
-    req.addEventListener('error', function (err) {
-      injectProdScriptIfMissing();
-    });
-    req.src = ORIGIN_NO_PORT + ':4040/favicon.ico';
-  } else {
-    injectProdScriptIfMissing();
-  }
-
-  function injectProdScriptIfMissing () {
-    if (!webvrAgentScript) {
-      webvrAgentScript = doc.createElement('script');
-      webvrAgentScript.src = webvrAgentScriptSrc;
-      webvrAgentScript.async = webvrAgentScript.defer = true;
-      doc.head.appendChild(webvrAgentScript);
-    }
-  }
-})(window, document);
-
 var sites = [
   {
     name: 'Shadows and Fog',
