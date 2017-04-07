@@ -1,6 +1,5 @@
 (function (win, doc) {
   var IS_PROD = !(window.location.port && (window.location.hostname.split('.').length === 4 || window.location.hostname === 'localhost'));
-  console.error(IS_PROD);
   var ORIGIN_NO_PORT = window.location.protocol + '//' + window.location.hostname;
   var webvrAgentScript = doc.querySelector('script[src*="agent"][src*="/client.js"]');
   var webvrAgentScriptSrcLocal = ORIGIN_NO_PORT + ':4040/client.js';
