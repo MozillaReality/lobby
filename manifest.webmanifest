@@ -7,7 +7,6 @@
   "start_url": "./?src=manifest",
   "display": "fullscreen",
   "theme_color": "#177bdb",
-  "background_color": "#000",
   "icons": [
     {
       "src": "img/logo.svg",
