@@ -6,6 +6,7 @@ Welcome to the **[WebVR Lobby](https://lobby.webvr.rocks/)**!
 
 [![WebVR Lobby](https://raw.githubusercontent.com/webvrrocks/webvr-lobby/master/img/preview.png "WebVR Lobby")](https://lobby.webvr.rocks/)
 
+
 ## Local development
 
 To get started with local development, clone this repository, install the [Node](https://nodejs.org/) dependencies, and start the local development server:
@@ -18,21 +19,24 @@ npm start  # Start the local development server.
 
 And, then open this URL in your browser: **[`http://localhost:8000/`](http://localhost:8000/)**
 
-### Using with WebVR-Agent
+### Using with the [WebVR Agent](https://github.com/WebVRRocks/webvr-agent)
 
 To work with the lobby using the **[WebVR Agent](https://github.com/WebVRRocks/webvr-agent)**, clone the **[WebVR Agent](https://github.com/WebVRRocks/webvr-agent)** repo, install [Node](https://nodejs.org/) dependencies, and start the WebVR Agent in another terminal session, then start the WebVR lobby using instructions for _Local Development_.
 
 Full instructions can be found in the **[WebVR Agent](https://github.com/WebVRRocks/webvr-agent)** repo.
 
+
 ## Deployment
 
-To deploy the static pages to [production](https://lobby.webvr.rocks/):
+The static version of this project is automatically deployed to [production](https://lobby.webvr.rocks/) by [Travis CI](https://travis-ci.org/WebVRRocks/webvr-lobby) when Pull Requests are successfully merged and commits are pushed to the `master` branch of this repository.
+
+To manually deploy the static version of this project to [production](https://lobby.webvr.rocks/):
 
 ```sh
 npm run deploy
 ```
 
-To deploy the static pages to your repository's GitHub pages (replacing `cvan` with your username):
+To deploy the static version of this project to your repository's GitHub pages (e.g., https://cvan.github.io/), set the `GHPAGES_REPO` environment variable like so (i.e., containing your username instead of `cvan`):
 
 ```sh
 GHPAGES_REPO="cvan/webvr-lobby" npm run deploy
